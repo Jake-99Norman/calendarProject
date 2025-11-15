@@ -1,48 +1,54 @@
-import { useState } from "react";
+import { useState } from "react"
 import type { Event } from "../types/types"
-import "../styles/Modal.css";
-import { useModalAnimation } from "../hooks/useModalAnimation";
+import "../styles/Modal.css"
+import { useModalAnimation } from "../hooks/useModalAnimation"
+import "../styles/modalAnimation.css"
 
 type EditModalProps = {
-  event: Event;
-  onClose: () => void;
-  onSave: (updatedEvent: Event) => void;
-  onDelete: (id: string) => void;
-};
+  event: Event
+  onClose: () => void
+  onSave: (updatedEvent: Event) => void
+  onDelete: (id: string) => void
+}
 
-export default function EditModal({ event, onClose, onSave, onDelete }: EditModalProps) {
-  const [title, setTitle] = useState(event.title);
-  const [isAllDay, setIsAllDay] = useState(event.allDay ?? false);
-  const [startTime, setStartTime] = useState(event.startTime ?? "");
-  const [endTime, setEndTime] = useState(event.endTime ?? "");
-  const [color, setColor] = useState(event.color ?? "hsl(200, 80%, 50%)");
-  const [error, setError] = useState("");
+export default function EditModal({
+  event,
+  onClose,
+  onSave,
+  onDelete,
+}: EditModalProps) {
+  const [title, setTitle] = useState(event.title)
+  const [isAllDay, setIsAllDay] = useState(event.allDay ?? false)
+  const [startTime, setStartTime] = useState(event.startTime ?? "")
+  const [endTime, setEndTime] = useState(event.endTime ?? "")
+  const [color, setColor] = useState(event.color ?? "hsl(200, 80%, 50%)")
+  const [error, setError] = useState("")
 
-  const { closing, animateClose } = useModalAnimation(onClose);
-  const handleClose = () => animateClose();
+  const { closing, animateClose } = useModalAnimation(onClose)
+  const handleClose = () => animateClose()
 
   const formattedDate = new Date(event.date).toLocaleDateString(undefined, {
     weekday: "short",
     month: "short",
     day: "numeric",
-  });
+  })
 
   const handleSave = () => {
-    setError("");
+    setError("")
 
     if (!title.trim()) {
-      setError("Event name is required.");
-      return;
+      setError("Event name is required.")
+      return
     }
 
     if (!isAllDay && (!startTime || !endTime)) {
-      setError("Start and End times are required if All Day is not selected.");
-      return;
+      setError("Start and End times are required if All Day is not selected.")
+      return
     }
 
     if (!isAllDay && startTime >= endTime) {
-      setError("Start time must be before End time.");
-      return;
+      setError("Start time must be before End time.")
+      return
     }
 
     const updatedEvent: Event = {
@@ -52,16 +58,16 @@ export default function EditModal({ event, onClose, onSave, onDelete }: EditModa
       startTime: isAllDay ? undefined : startTime,
       endTime: isAllDay ? undefined : endTime,
       color,
-    };
+    }
 
-    onSave(updatedEvent);
-    handleClose();
-  };
+    onSave(updatedEvent)
+    handleClose()
+  }
 
   const handleDelete = () => {
-    onDelete(event.id);
-    handleClose();
-  };
+    onDelete(event.id)
+    handleClose()
+  }
 
   return (
     <div className="modal-overlay" onClick={handleClose}>
@@ -84,6 +90,7 @@ export default function EditModal({ event, onClose, onSave, onDelete }: EditModa
             <input
               type="text"
               id="event-title"
+              name="title"
               value={title}
               onChange={(e) => setTitle(e.target.value)}
             />
@@ -94,6 +101,7 @@ export default function EditModal({ event, onClose, onSave, onDelete }: EditModa
             <input
               type="checkbox"
               id="all-day"
+              name="allDay"
               checked={isAllDay}
               onChange={(e) => setIsAllDay(e.target.checked)}
             />
@@ -101,28 +109,30 @@ export default function EditModal({ event, onClose, onSave, onDelete }: EditModa
           </div>
 
           {/* Time Inputs */}
-          {!isAllDay && (
-            <div className="modal-time">
-              <div>
-                <label htmlFor="start-time">Start Time</label>
-                <input
-                  type="time"
-                  id="start-time"
-                  value={startTime}
-                  onChange={(e) => setStartTime(e.target.value)}
-                />
-              </div>
-              <div>
-                <label htmlFor="end-time">End Time</label>
-                <input
-                  type="time"
-                  id="end-time"
-                  value={endTime}
-                  onChange={(e) => setEndTime(e.target.value)}
-                />
-              </div>
+          <div className="modal-time">
+            <div>
+              <label htmlFor="start-time">Start Time</label>
+              <input
+                type="time"
+                id="start-time"
+                name="startTime"
+                disabled={isAllDay}
+                value={startTime}
+                onChange={(e) => setStartTime(e.target.value)}
+              />
             </div>
-          )}
+            <div>
+              <label htmlFor="end-time">End Time</label>
+              <input
+                type="time"
+                id="end-time"
+                name="endTime"
+                disabled={isAllDay}
+                value={endTime}
+                onChange={(e) => setEndTime(e.target.value)}
+              />
+            </div>
+          </div>
 
           {error && <p className="error-message">{error}</p>}
 
@@ -165,7 +175,7 @@ export default function EditModal({ event, onClose, onSave, onDelete }: EditModa
 
         <footer className="modal-footer">
           <button type="button" className="modal-add-btn" onClick={handleSave}>
-             Add
+            Add
           </button>
           <button
             className="modal-delete-btn"
@@ -177,6 +187,5 @@ export default function EditModal({ event, onClose, onSave, onDelete }: EditModa
         </footer>
       </div>
     </div>
-  );
+  )
 }
-        

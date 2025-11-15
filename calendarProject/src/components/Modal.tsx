@@ -2,6 +2,7 @@ import { useState } from "react";
 import type { Event } from "../types/types";
 import "../styles/Modal.css";
 import { useModalAnimation } from "../hooks/useModalAnimation";
+import "../styles/modalAnimation.css"
 
 
 type ModalProps = {

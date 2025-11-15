@@ -56,10 +56,17 @@ export default function CalendarGrid({
 
   function eventsForDate(y: number, m: number, d: number) {
     const key = `${y}-${m + 1}-${d}`
-    return events.filter((e) => e.date === key)
-  }
+    const dayEvents = events.filter((e) => e.date === key)
 
-  const maxEvents = 3
+    return dayEvents.sort((a, b) => {
+        if(a.allDay && !b.allDay) return -1
+        if( !a.allDay && b.allDay) return 1
+        if(a.startTime && b.startTime) return a.startTime.localeCompare(b.startTime)
+            return 0
+    })
+}
+
+  const maxEvents = 5
 
   return (
     <div className="calendar-container">
