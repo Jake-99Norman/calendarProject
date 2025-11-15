@@ -4,6 +4,7 @@ import CalendarGrid from "./components/CalendarGrid";
 import type { Event } from "./components/types";
 import AddEventModal from "./components/AddEventModal";
 import EditEventModal from "./components/EditEventModal";
+import OverFlowModal from "./components/OverFlowModal";
 
 export default function App() {
   const today = new Date();
@@ -13,8 +14,10 @@ export default function App() {
   const [events, setEvents] = useState<Event[]>([]);
 
   // --- Modal state ---
-  const [selectedDate, setSelectedDate] = useState<string | null>(null);
-  const [editingEvent, setEditingEvent] = useState<Event | null>(null);
+  const [selectedDate, setSelectedDate] = useState<string | null>(null); // Add Event
+  const [editingEvent, setEditingEvent] = useState<Event | null>(null); // Edit Event
+  const [overflowDate, setOverflowDate] = useState<string | null>(null); // Overflow Modal
+  const [overflowEvents, setOverflowEvents] = useState<Event[]>([]);
 
   const monthName = new Date(year, month).toLocaleString("default", { month: "long" });
 
@@ -66,9 +69,9 @@ export default function App() {
     setEditingEvent(event); // Open EditEventModal
   }
 
-  function onOverflowClick(date: string) {
-    console.log("Overflow clicked for:", date);
-    // Optional: open overflow modal
+  function onOverflowClick(date: string, dayEvents: Event[]) {
+    setOverflowDate(date);
+    setOverflowEvents(dayEvents);
   }
 
   return (
@@ -107,6 +110,15 @@ export default function App() {
           onClose={() => setEditingEvent(null)}
           onSave={handleUpdateEvent}
           onDelete={handleDeleteEvent}
+        />
+      )}
+
+      {/* --- Overflow Modal --- */}
+      {overflowDate && (
+        <OverFlowModal
+          date={overflowDate}
+          events={overflowEvents}
+          onClose={() => setOverflowDate(null)}
         />
       )}
     </div>

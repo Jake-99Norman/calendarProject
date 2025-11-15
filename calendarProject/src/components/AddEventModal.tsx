@@ -1,6 +1,7 @@
 import { useState } from "react";
 import type { Event } from "./types";
 import BaseModal from "./BaseModal";
+import "./BaseModal.css";
 
 type AddEventModalProps = {
   date: string;

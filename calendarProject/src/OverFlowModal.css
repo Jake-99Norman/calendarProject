@@ -1,0 +1,52 @@
+.overflow-modal-overlay{
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 10;
+    background-color: hsla(0, 0%, 47%, 0.6);
+}
+
+.overflow-modal-container{
+    background-color: white;
+    width: 90%;
+    max-width: 500px;
+    max-height: 80vh;
+    border-radius: 0.5rem;
+    padding: 1rem;
+    overflow-y: auto;
+    padding: .3rem;
+    border: 2px solid black;
+}
+
+.overflow-modal-header{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding-bottom: 0.5rem;
+    margin: 3px;
+}
+
+.close-btn {
+    background-color: transparent;
+    border: none;
+    font-size: x-large;
+    cursor: pointer;
+}
+
+.modal-body{
+    margin-top: 1rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+}
+
+.overflow-event {
+    padding: .3rem;
+    width: 100%;
+    border-radius: .5rem;
+}
