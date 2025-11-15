@@ -6,6 +6,7 @@ import EditEventModal from "./components/EditEventModal";
 import OverflowModal from "./components/OverflowModal";
 import type { Event } from "./types/types";
 import Modal from "./components/Modal";
+import { useLocalStorage } from "./hooks/useLocalStorage";
 
 
 export default function App() {
@@ -13,7 +14,7 @@ export default function App() {
 
   const [month, setMonth] = useState(today.getMonth())
   const [year, setYear] = useState(today.getFullYear())
-  const [events, setEvents] = useState<Event[]>([])
+  const [events, setEvents] = useLocalStorage<Event[]>("calendar-events", [])
 
   // --- Modal state ---
   const [selectedDate, setSelectedDate] = useState<string | null>(null) // Add Event
