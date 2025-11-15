@@ -9,26 +9,23 @@
   justify-content: center;
   align-items: center;
   z-index: 10;
-  background-color: hsla(0, 0%, 47%, 0.6);
+  background-color: hsla(0, 0%, 0%, 0.4); /* Softer overlay */
 }
 
+/* Modal container */
 .modal-container {
-  background-color: white;
+  background-color: hsl(0, 0%, 100%); /* white */
   border-radius: 0.3em;
   width: 350px;
   max-width: 90%;
-  border: 2px solid black;
+  border: 2px solid #dadce0; /* button border token */
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  animation-name: popIn;
-  animation-duration: 1s;
-  animation: timing-function delay iteration-count fill-mode;
-  animation-direction: forwards;
+  animation: popIn 0.3s ease-out forwards;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
 }
-
-
 
 /* Header */
 .modal-header {
@@ -36,6 +33,10 @@
   justify-content: space-between;
   align-items: center;
   gap: 1.3rem;
+  width: 100%;
+  padding: 0.5rem 1rem;
+  color: #555; /* Modal Date Header Text */
+  font-weight: bold;
 }
 
 .modal-close-btn {
@@ -45,6 +46,7 @@
   background-color: transparent;
   border: none;
   font-size: x-large;
+  color: #333; /* Default Text */
 }
 
 /* Body */
@@ -54,13 +56,14 @@
   align-items: center;
   justify-content: center;
   padding: 0.5rem;
+  width: 100%;
 }
 
 /* Event input */
 .modal-event-input {
   display: flex;
-  justify-content: flex-start;
   flex-direction: column;
+  justify-content: flex-start;
   width: 100%;
   padding: 1rem;
 }
@@ -68,6 +71,7 @@
 .modal-event-input label {
   font-weight: bold;
   margin-bottom: 0.3rem;
+  color: #777; /* Modal Form Label Text */
 }
 
 .day-selector {
@@ -79,6 +83,7 @@
 .modal-time {
   display: flex;
   gap: 1em;
+  width: 100%;
 }
 
 .modal-time input {
@@ -94,19 +99,6 @@
   padding: 1rem;
   width: 90%;
   gap: 0.5rem;
-}
-
-.color-selector {
-  appearance: none;
-  -webkit-appearance: none;
-  width: 30px;
-  height: 30px;
-  border: none;
-  cursor: pointer;
-  margin-right: 0.5rem;
-  border-radius: 0.3em; /* optional, square with slight rounding */
-  display: inline-block;
-  position: relative;
 }
 
 .color-options {
@@ -128,44 +120,70 @@
 }
 
 .red {
-  background-color: hsl(0, 75%, 60%);
+  background-color: hsl(0, 75%, 60%); /* Red Event */
 }
 
 .blue {
-  background-color: hsl(200, 80%, 50%);
+  background-color: hsl(200, 80%, 50%); /* Blue Event */
 }
 
 .green {
-  background-color: hsl(150, 80%, 30%);
+  background-color: hsl(150, 80%, 30%); /* Green Event */
 }
 
+/* Footer / Buttons */
 .modal-footer {
   display: flex;
+  flex-direction: column;
   align-items: center;
   width: 100%;
+  padding-bottom: 1rem;
 }
 
-/* Add button */
 .modal-add-btn {
-  background-color: hsla(150, 80%, 50%, 0.2);
-  color: black;
-  border: 2px solid hsl(150, 80%, 30%);
+  background-color: hsl(150, 80%, 95%); /* Save/Add Button Background */
+  color: hsl(150, 80%, 10%); /* Save/Add Button Text */
+  border: 2px solid hsl(150, 80%, 30%); /* Save/Add Button Border */
   border-radius: 0.3rem;
-  margin: 0.5em auto;
   width: 90%;
   height: 3em;
+  margin: 0.5rem auto;
   cursor: pointer;
+  transition: background-color 0.2s ease;
+}
+
+.modal-add-btn:hover {
+  background-color: hsl(150, 80%, 90%); /* Save/Add Button Hover Background */
 }
 
 .modal-delete-btn {
-  background-color: #dc2626;
-  color: white;
-  border: none;
-  padding: 8px 14px;
+  background-color: hsl(0, 75%, 95%); /* Delete Button Background */
+  color: hsl(0, 75%, 10%); /* Delete Button Text */
+  border: 2px solid hsl(0, 75%, 60%); /* Delete Button Border */
   border-radius: 6px;
   cursor: pointer;
+  width: 90%;
+  padding: 8px 14px;
+  margin: 0.5rem auto;
+  transition: background-color 0.2s ease;
 }
 
 .modal-delete-btn:hover {
-  background-color: #b91c1c;
+  background-color: hsl(0, 75%, 90%); /* Delete Button Hover Background */
+}
+
+/* Animation */
+@keyframes popIn {
+  0% {
+    transform: scale(0.7);
+    opacity: 0;
+  }
+  80% {
+    transform: scale(1.05);
+    opacity: 1;
+  }
+  100% {
+    transform: scale(1);
+    opacity: 1;
+  }
 }

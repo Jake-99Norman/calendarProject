@@ -7,12 +7,14 @@ type OverflowModalProps = {
   events: Event[]
   date: string
   onClose: () => void
+  onEventClick: (event: Event) => void // NEW: callback for editing
 }
 
 export default function OverflowModal({
   events,
   date,
   onClose,
+  onEventClick,
 }: OverflowModalProps) {
   const d = new Date(date)
   const formattedDate = `${d.getMonth() + 1}/${d.getDate()}/${d.getFullYear()}`
@@ -24,9 +26,7 @@ export default function OverflowModal({
   return (
     <div className="overflow-modal-overlay" onClick={handleClose}>
       <div
-        className={`overflow-modal-container ${
-          closing ? "modal-close" : "modal-open"
-        }`}
+        className={`overflow-modal-container ${closing ? "modal-close" : "modal-open"}`}
         onClick={(e) => e.stopPropagation()}
       >
         <header className="overflow-modal-header">
@@ -42,6 +42,10 @@ export default function OverflowModal({
               key={event.id}
               className="overflow-event"
               style={{ backgroundColor: event.color }}
+              onClick={() => {
+                onEventClick(event) // OPEN EDIT MODAL
+                handleClose()        // Close overflow modal
+              }}
             >
               {event.allDay ? "(All Day) " : ""}
               {event.title} {event.startTime ? `(${event.startTime})` : ""}

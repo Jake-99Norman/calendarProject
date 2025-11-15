@@ -1,3 +1,4 @@
+import { useEffect, useRef, useState } from "react"
 import type { Event } from "../types/types"
 
 const WEEKDAYS = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"]
@@ -21,6 +22,17 @@ export default function CalendarGrid({
   onEventClick,
   onOverflowClick,
 }: CalendarGridProps) {
+  const [resizeTick, setResizeTick] = useState(0)
+  const calendarRef = useRef<HTMLDivElement>(null)
+
+  useEffect(() => {
+    if (!calendarRef.current) return
+
+    const observer = new ResizeObserver(() => setResizeTick((prev) => prev + 1))
+    observer.observe(calendarRef.current)
+
+    return () => observer.disconnect()
+  }, [])
 
   const daysInMonth = new Date(year, month + 1, 0).getDate()
   const firstDayOfWeek = new Date(year, month, 1).getDay()
@@ -59,19 +71,19 @@ export default function CalendarGrid({
     const dayEvents = events.filter((e) => e.date === key)
 
     return dayEvents.sort((a, b) => {
-        if(a.allDay && !b.allDay) return -1
-        if( !a.allDay && b.allDay) return 1
-        if(a.startTime && b.startTime) return a.startTime.localeCompare(b.startTime)
-            return 0
+      if (a.allDay && !b.allDay) return -1
+      if (!a.allDay && b.allDay) return 1
+      if (a.startTime && b.startTime)
+        return a.startTime.localeCompare(b.startTime)
+      return 0
     })
-}
+  }
 
   const maxEvents = 5
 
   return (
-    <div className="calendar-container">
+    <div className="calendar-container" ref={calendarRef}>
       <div className="calendar">
-
         {/* Weekday Headers */}
         <div className="weekday-row">
           {WEEKDAYS.map((day) => (
@@ -86,34 +98,59 @@ export default function CalendarGrid({
           {calendarCells.map((cell, i) => {
             const { day, month: m, year: y, isCurrentMonth } = cell
             const dayEvents = eventsForDate(y, m, day)
+
+            const cellDate = new Date(y, m, day)
             const isToday =
               day === today.getDate() &&
               m === today.getMonth() &&
               y === today.getFullYear()
 
+            const isPast =
+              isCurrentMonth &&
+              cellDate <
+                new Date(today.getFullYear(), today.getMonth(), today.getDate())
             const hasOverflow = dayEvents.length > maxEvents
 
             return (
               <div
-                key={i}
+                key={`${i}-${resizeTick}`}
                 className={`day ${!isCurrentMonth ? "faded" : ""} ${
                   isToday ? "today" : ""
-                }`}
-                onClick={() => onDayClick(`${y}-${m + 1}-${day}`)}
+                } ${isPast ? "past-day" : ""}`}
+                onClick={() => !isPast && onDayClick(`${y}-${m + 1}-${day}`)}
               >
                 <div className="day-number">{day}</div>
+
+                {!isPast && (
+                  <button
+                    className="add-event-btn"
+                    onClick={(e) => {
+                      e.stopPropagation() // prevent triggering the day click
+                      onDayClick(`${y}-${m + 1}-${day}`)
+                    }}
+                  >
+                    +
+                  </button>
+                )}
 
                 {dayEvents.slice(0, maxEvents).map((event) => (
                   <div
                     key={event.id}
                     className="event"
-                    style={{ backgroundColor: event.color }}
+                    style={{ backgroundColor: event.color ?? "#888" }}
                     onClick={(e) => {
                       e.stopPropagation()
                       onEventClick(event)
                     }}
                   >
-                    {event.title}
+                    {event.title}{" "}
+                    {(event.allDay || event.startTime) && (
+                      <span className="event-meta">
+                        {event.allDay
+                          ? "(All Day Event)"
+                          : `(${event.startTime})`}
+                      </span>
+                    )}
                   </div>
                 ))}
 
@@ -132,7 +169,6 @@ export default function CalendarGrid({
             )
           })}
         </div>
-
       </div>
     </div>
   )

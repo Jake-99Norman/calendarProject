@@ -1,13 +1,12 @@
-import { useState } from "react";
-import CalendarHeader from "./components/CalendarHeader";
-import CalendarGrid from "./components/CalendarGrid";
+import { useState } from "react"
+import CalendarHeader from "./components/CalendarHeader"
+import CalendarGrid from "./components/CalendarGrid"
 import "./styles/calendar.css"
-import EditEventModal from "./components/EditEventModal";
-import OverflowModal from "./components/OverflowModal";
-import type { Event } from "./types/types";
-import Modal from "./components/Modal";
-import { useLocalStorage } from "./hooks/useLocalStorage";
-
+import EditEventModal from "./components/EditEventModal"
+import OverflowModal from "./components/OverflowModal"
+import type { Event } from "./types/types"
+import Modal from "./components/Modal"
+import { useLocalStorage } from "./hooks/useLocalStorage"
 
 export default function App() {
   const today = new Date()
@@ -123,6 +122,10 @@ export default function App() {
           date={overflowDate}
           events={overflowEvents}
           onClose={() => setOverflowDate(null)}
+          onEventClick={(event) => {
+            setEditingEvent(event) // open edit modal
+            setOverflowDate(null) // close overflow modal
+          }}
         />
       )}
     </div>

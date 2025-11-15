@@ -17,7 +17,7 @@ export default function Modal({ date, onClose, addEvent }: ModalProps) {
   const [startTime, setStartTime] = useState("");
   const [endTime, setEndTime] = useState("");
   const [error, setError] = useState("");
-  const [color, setColor] = useState("hsl(200, 80%, 50%)");
+  const [color, setColor] = useState<string | null>(null);
 
   const { closing, animateClose } = useModalAnimation(onClose);
 
@@ -53,7 +53,7 @@ export default function Modal({ date, onClose, addEvent }: ModalProps) {
       allDay: isAllDay,
       startTime: isAllDay ? undefined : startTime,
       endTime: isAllDay ? undefined : endTime,
-      color,
+      color: color ?? "", 
     };
 
     addEvent(newEvent);
@@ -128,40 +128,55 @@ export default function Modal({ date, onClose, addEvent }: ModalProps) {
           {error && <p className="error-message">{error}</p>}
 
           {/* Color Selector */}
-          <div className="modal-color-selector-container">
-            <span>Color</span>
-            <div className="color-options">
-              <input
-                type="radio"
-                id="color-red"
-                name="color"
-                value="hsl(0, 75%, 60%)"
-                checked={color === "hsl(0, 75%, 60%)"}
-                onChange={(e) => setColor(e.target.value)}
-              />
-              <label htmlFor="color-red" className="color-box red"></label>
+         <div className="modal-color-selector-container">
+  <span>Color</span>
+  <div className="color-options">
+    {/* Red */}
+    <input
+      type="radio"
+      id="color-red"
+      name="color"
+      value="hsl(0, 75%, 60%)"
+      checked={color === "hsl(0, 75%, 60%)"}
+      onChange={(e) => setColor(e.target.value)}
+    />
+    <label htmlFor="color-red" className="color-box red"></label>
 
-              <input
-                type="radio"
-                id="color-blue"
-                name="color"
-                value="hsl(200, 80%, 50%)"
-                checked={color === "hsl(200, 80%, 50%)"}
-                onChange={(e) => setColor(e.target.value)}
-              />
-              <label htmlFor="color-blue" className="color-box blue"></label>
+    {/* Blue */}
+    <input
+      type="radio"
+      id="color-blue"
+      name="color"
+      value="hsl(200, 80%, 50%)"
+      checked={color === "hsl(200, 80%, 50%)"}
+      onChange={(e) => setColor(e.target.value)}
+    />
+    <label htmlFor="color-blue" className="color-box blue"></label>
 
-              <input
-                type="radio"
-                id="color-green"
-                name="color"
-                value="hsl(150, 80%, 30%)"
-                checked={color === "hsl(150, 80%, 30%)"}
-                onChange={(e) => setColor(e.target.value)}
-              />
-              <label htmlFor="color-green" className="color-box green"></label>
-            </div>
-          </div>
+    {/* Green */}
+    <input
+      type="radio"
+      id="color-green"
+      name="color"
+      value="hsl(150, 80%, 30%)"
+      checked={color === "hsl(150, 80%, 30%)"}
+      onChange={(e) => setColor(e.target.value)}
+    />
+    <label htmlFor="color-green" className="color-box green"></label>
+
+    {/* Hidden default option */}
+    <input
+      type="radio"
+      id="color-none"
+      name="color"
+      value=""
+      checked={color === null}
+      onChange={() => setColor(null)}
+      style={{ display: "none" }}
+    />
+  </div>
+</div>
+
         </form>
 
         <footer className="modal-footer">
@@ -171,5 +186,5 @@ export default function Modal({ date, onClose, addEvent }: ModalProps) {
         </footer>
       </div>
     </div>
-  );
+  ); 
 }

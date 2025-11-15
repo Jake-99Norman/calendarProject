@@ -1,19 +1,61 @@
+/* =========================
+   VARIABLES & BASE STYLES
+   ========================= */
+:root {
+  /* Event colors */
+  --event-red: hsl(0, 75%, 60%);
+  --event-blue: hsl(200, 80%, 50%);
+  --event-green: hsl(150, 80%, 30%);
+
+  /* Buttons */
+  --button-border: #dadce0;
+  --button-hover-bg: #f1f3f4;
+
+  /* Today */
+  --today-bg: hsl(200, 80%, 50%);
+  --today-text: white;
+
+  /* Text */
+  --default-text: #333;
+  --weekday-text: #777;
+
+  /* Out-of-month day */
+  --out-month-bg: #dadce0;
+
+  /* Delete button */
+  --delete-btn-border: hsl(0, 75%, 60%);
+  --delete-btn-bg: hsl(0, 75%, 95%);
+  --delete-btn-text: hsl(0, 75%, 10%);
+  --delete-btn-hover-bg: hsl(0, 75%, 90%);
+
+  /* Save/Add button */
+  --save-btn-border: hsl(150, 80%, 30%);
+  --save-btn-bg: hsl(150, 80%, 95%);
+  --save-btn-text: hsl(150, 80%, 10%);
+  --save-btn-hover-bg: hsl(150, 80%, 90%);
+}
+
+/* Base */
 html,
 body {
   margin: 0;
   padding: 0;
   height: 100%;
   font-family: sans-serif;
+  color: var(--default-text);
+  background-color: #fafafa;
 }
 
-/* Overall layout */
+/* =========================
+   CALENDAR LAYOUT
+   ========================= */
 .calendar-container {
   display: flex;
   justify-content: center;
   align-items: flex-start;
   width: 100%;
   height: 100vh;
-  background-color: #fafafa;
+  margin: 0;
 }
 
 .calendar {
@@ -42,7 +84,9 @@ body {
   cursor: pointer;
 }
 
-/* Weekday Header Row */
+/* =========================
+   WEEKDAY HEADER
+   ========================= */
 .weekday-row {
   display: grid;
   grid-template-columns: repeat(7, 1fr);
@@ -60,31 +104,33 @@ body {
   align-items: center;
   justify-content: center;
   height: 2.5rem;
-  color: #555;
+  color: var(--weekday-text);
   border-bottom: 1px solid #ccc;
 }
 
-/* 42-day calendar */
+/* =========================
+   CALENDAR GRID
+   ========================= */
 .calendar-grid {
   display: grid;
   grid-template-columns: repeat(7, 1fr);
 }
 
-/* day cells */
+/* =========================
+   DAY CELLS
+   ========================= */
 .day {
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: flex-start;
-
   position: relative;
-  background-color: white;
   border: 1px solid #ccc;
   border-top: none;
   min-height: 100px;
   padding: 6px;
   text-align: left;
-  background: #fff;
+  background: white;
   transition: background-color 0.2s ease;
   cursor: pointer;
   aspect-ratio: 1/1;
@@ -92,13 +138,20 @@ body {
 
 .day:hover {
   background-color: #e6f7ff;
-  cursor: pointer;
+}
+
+/* Day number */
+.day-number {
+  display: inline-block;
+  padding: 4px 6px;
+  border-radius: 4px;
+  font-weight: normal;
 }
 
 /* Today */
 .today .day-number {
-  background: hsl(200, 80%, 50%);
-  color: white;
+  background: var(--today-bg);
+  color: var(--today-text);
   width: 22px;
   height: 22px;
   border-radius: 50%;
@@ -109,22 +162,50 @@ body {
   font-weight: 600;
 }
 
-/* Faded prev/next month days */
+/* Faded / out-of-month days */
 .day.faded {
-  opacity: 0.45;
-  background: #f0f0f0;
+  opacity: 0.6;
+  background-color: var(--out-month-bg);
+  color: #999;
 }
 
-.day-number {
-  display: inline-block;
-  padding: 4px 6px;
-  border-radius: 4px;
-  font-weight: normal;
+.day.past-day {
+  color: #999;
+  background-color: var(--out-month-bg);
+  cursor: not-allowed;
+  pointer-events: none;
 }
 
-/* Events */
+/* =========================
+   EVENTS
+   ========================= */
 
-.event-list{
+.add-event-btn {
+  position: absolute;
+  top: 2px;
+  right: 2px;
+  color: var(--default-text);
+  background-color: transparent;
+  font-weight: bolder;
+  border: none;
+  border-radius: 50%;
+  width: 18px;
+  height: 18px;
+  font-size: 20px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  opacity: 0;
+  transition: opacity 0.2s;
+}
+
+.day:hover .add-event-btn {
+  opacity: 1;
+}
+
+.event-list {
   display: flex;
   flex-direction: column;
   gap: 4px;
@@ -138,9 +219,29 @@ body {
   padding: 4px;
   margin: 2px 0;
   border-radius: 8px;
-  font-size: 0.85rem;
+  font-size: 1rem;
   cursor: pointer;
   transition: transform 0.2s;
+  color: #333;
+  font-weight: bold;
+}
+
+.event.red {
+  background-color: var(--event-red);
+}
+.event.blue {
+  background-color: var(--event-blue);
+}
+.event.green {
+  background-color: var(--event-green);
+}
+
+/* Smaller, italic text for all-day or timed events */
+.event-meta {
+  font-size: 0.7rem;
+  font-style: italic;
+  margin-left: 2px;
+  color: #444;
 }
 
 /* Overflow button */
@@ -149,13 +250,42 @@ body {
   background: transparent;
   border: none;
   font-weight: bold;
-  color: #333;
+  color: var(--default-text);
   cursor: pointer;
 }
 
-/* RESPONSIVE LAYOUTS */
+/* =========================
+   BUTTONS
+   ========================= */
+.delete-btn {
+  border: 1px solid var(--delete-btn-border);
+  background: var(--delete-btn-bg);
+  color: var(--delete-btn-text);
+  padding: 4px 8px;
+  border-radius: 6px;
+  cursor: pointer;
+}
 
-/* Medium screens (tablets) */
+.delete-btn:hover {
+  background: var(--delete-btn-hover-bg);
+}
+
+.save-btn {
+  border: 1px solid var(--save-btn-border);
+  background: var(--save-btn-bg);
+  color: var(--save-btn-text);
+  padding: 4px 8px;
+  border-radius: 6px;
+  cursor: pointer;
+}
+
+.save-btn:hover {
+  background: var(--save-btn-hover-bg);
+}
+
+/* =========================
+   RESPONSIVE LAYOUTS
+   ========================= */
 @media (max-width: 900px) {
   .calendar-grid {
     grid-template-columns: repeat(4, 1fr);
@@ -165,7 +295,6 @@ body {
   }
 }
 
-/* Small phones */
 @media (max-width: 600px) {
   .calendar-grid {
     grid-template-columns: repeat(2, 1fr);
