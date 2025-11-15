@@ -1,7 +1,6 @@
 import { useState } from "react";
 import type { Event } from "../types/types"
-import "./Modal.css";
-import "./modalAnimations.css";
+import "../styles/Modal.css";
 import { useModalAnimation } from "../hooks/useModalAnimation";
 
 type EditModalProps = {

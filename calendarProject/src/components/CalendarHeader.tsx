@@ -15,9 +15,9 @@ export default function CalendarHeader({
 }: CalendarHeaderProps) {
   return (
     <div className="calendar-header">
-      <button onClick={onToday}>Today</button>
-      <button onClick={onPrev}>{"<"}</button>
-      <button onClick={onNext}>{">"}</button>
+      <button className="btn today-btn" onClick={onToday}>Today</button>
+      <button className="btn prev-btn" onClick={onPrev}>{"<"}</button>
+      <button className="btn next-btn" onClick={onNext}>{">"}</button>
 
       <h2>
         {monthName} {year}

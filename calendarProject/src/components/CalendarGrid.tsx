@@ -1,5 +1,6 @@
-// CalendarGrid.tsx
 import type { Event } from "../types/types"
+
+const WEEKDAYS = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"]
 
 type CalendarGridProps = {
   month: number
@@ -8,7 +9,7 @@ type CalendarGridProps = {
   events: Event[]
   onDayClick: (date: string) => void
   onEventClick: (event: Event) => void
-  onOverflowClick?: (date: string, events: Event[]) => void // <- updated
+  onOverflowClick?: (date: string, events: Event[]) => void
 }
 
 export default function CalendarGrid({
@@ -20,64 +21,112 @@ export default function CalendarGrid({
   onEventClick,
   onOverflowClick,
 }: CalendarGridProps) {
-  // Get number of days in the month
-  const daysInMonth = new Date(year, month + 1, 0).getDate()
 
-  // Helper to get events for a specific day
-  function eventsForDay(day: number) {
-    const dateStr = `${year}-${month + 1}-${day}`
-    return events.filter((e) => e.date === dateStr)
+  const daysInMonth = new Date(year, month + 1, 0).getDate()
+  const firstDayOfWeek = new Date(year, month, 1).getDay()
+
+  const prevMonth = month === 0 ? 11 : month - 1
+  const prevMonthYear = month === 0 ? year - 1 : year
+  const daysInPrevMonth = new Date(prevMonthYear, prevMonth + 1, 0).getDate()
+
+  const leadingDays = firstDayOfWeek
+  const totalCells = 42
+  const trailingDays = totalCells - (leadingDays + daysInMonth)
+
+  const calendarCells = [
+    ...Array.from({ length: leadingDays }, (_, i) => ({
+      day: daysInPrevMonth - leadingDays + 1 + i,
+      month: prevMonth,
+      year: prevMonthYear,
+      isCurrentMonth: false,
+    })),
+    ...Array.from({ length: daysInMonth }, (_, i) => ({
+      day: i + 1,
+      month,
+      year,
+      isCurrentMonth: true,
+    })),
+    ...Array.from({ length: trailingDays }, (_, i) => ({
+      day: i + 1,
+      month: month === 11 ? 0 : month + 1,
+      year: month === 11 ? year + 1 : year,
+      isCurrentMonth: false,
+    })),
+  ]
+
+  function eventsForDate(y: number, m: number, d: number) {
+    const key = `${y}-${m + 1}-${d}`
+    return events.filter((e) => e.date === key)
   }
 
-  // Max events to show directly in the cell
-  const maxEventsToShow = 3
-
-  const days = Array.from({ length: daysInMonth }, (_, i) => i + 1)
+  const maxEvents = 3
 
   return (
-    <div className="calendar-grid">
-      {days.map((day) => {
-        const dayEvents = eventsForDay(day)
-        const hasOverflow = dayEvents.length > maxEventsToShow
+    <div className="calendar-container">
+      <div className="calendar">
 
-        return (
-          <div
-            key={day}
-            className="calendar-day"
-            onClick={() => onDayClick(`${year}-${month + 1}-${day}`)}
-          >
-            <div className="day-number">{day}</div>
+        {/* Weekday Headers */}
+        <div className="weekday-row">
+          {WEEKDAYS.map((day) => (
+            <div key={day} className="weekday">
+              {day}
+            </div>
+          ))}
+        </div>
 
-            {/* Show events up to max */}
-            {dayEvents.slice(0, maxEventsToShow).map((event) => (
+        {/* 42-Day Grid */}
+        <div className="calendar-grid">
+          {calendarCells.map((cell, i) => {
+            const { day, month: m, year: y, isCurrentMonth } = cell
+            const dayEvents = eventsForDate(y, m, day)
+            const isToday =
+              day === today.getDate() &&
+              m === today.getMonth() &&
+              y === today.getFullYear()
+
+            const hasOverflow = dayEvents.length > maxEvents
+
+            return (
               <div
-                key={event.id}
-                className="calendar-event"
-                style={{ backgroundColor: event.color }}
-                onClick={(e) => {
-                  e.stopPropagation()
-                  onEventClick(event)
-                }}
+                key={i}
+                className={`day ${!isCurrentMonth ? "faded" : ""} ${
+                  isToday ? "today" : ""
+                }`}
+                onClick={() => onDayClick(`${y}-${m + 1}-${day}`)}
               >
-                {event.title}
-              </div>
-            ))}
+                <div className="day-number">{day}</div>
 
-            {/* Overflow button */}
-            {hasOverflow && onOverflowClick && (
-              <button
-                className="overflow-btn"
-                onClick={(e) => {
-                  e.stopPropagation()
-                  onOverflowClick(`${year}-${month + 1}-${day}`, dayEvents)
-                }}
-              >
-                +{dayEvents.length - maxEventsToShow} more
-              </button>
-            )}
-          </div>
-        )
-      })}
+                {dayEvents.slice(0, maxEvents).map((event) => (
+                  <div
+                    key={event.id}
+                    className="event"
+                    style={{ backgroundColor: event.color }}
+                    onClick={(e) => {
+                      e.stopPropagation()
+                      onEventClick(event)
+                    }}
+                  >
+                    {event.title}
+                  </div>
+                ))}
+
+                {hasOverflow && onOverflowClick && (
+                  <button
+                    className="overflow-btn"
+                    onClick={(e) => {
+                      e.stopPropagation()
+                      onOverflowClick(`${y}-${m + 1}-${day}`, dayEvents)
+                    }}
+                  >
+                    +{dayEvents.length - maxEvents} more
+                  </button>
+                )}
+              </div>
+            )
+          })}
+        </div>
+
+      </div>
     </div>
   )
 }

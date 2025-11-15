@@ -1,5 +1,5 @@
 import type { Event } from "../types/types"
-import "./OverflowModal.css"
+import "../styles/OverflowModal.css"
 import { useModalAnimation } from "../hooks/useModalAnimation"
 
 type OverflowModalProps = {

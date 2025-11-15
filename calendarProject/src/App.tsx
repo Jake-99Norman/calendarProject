@@ -1,6 +1,7 @@
 import { useState } from "react";
 import CalendarHeader from "./components/CalendarHeader";
 import CalendarGrid from "./components/CalendarGrid";
+import "./styles/calendar.css"
 import EditEventModal from "./components/EditEventModal";
 import OverflowModal from "./components/OverflowModal";
 import type { Event } from "./types/types";
