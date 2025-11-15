@@ -1,0 +1,171 @@
+/* Full-screen overlay to center the modal */
+.modal-overlay {
+  position: fixed; /* stay on top of the page */
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  display: flex; /* flex to center modal */
+  justify-content: center;
+  align-items: center;
+  z-index: 10;
+  background-color: hsla(0, 0%, 47%, 0.6);
+}
+
+.modal-container {
+  background-color: white;
+  border-radius: 0.3em;
+  width: 350px;
+  max-width: 90%;
+  border: 2px solid black;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  animation-name: popIn;
+  animation-duration: 1s;
+  animation: timing-function delay iteration-count fill-mode;
+  animation-direction: forwards;
+}
+
+
+
+/* Header */
+.modal-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 1.3rem;
+}
+
+.modal-close-btn {
+  cursor: pointer;
+  height: 3rem;
+  width: 3rem;
+  background-color: transparent;
+  border: none;
+  font-size: x-large;
+}
+
+/* Body */
+.modal-body {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 0.5rem;
+}
+
+/* Event input */
+.modal-event-input {
+  display: flex;
+  justify-content: flex-start;
+  flex-direction: column;
+  width: 100%;
+  padding: 1rem;
+}
+
+.modal-event-input label {
+  font-weight: bold;
+  margin-bottom: 0.3rem;
+}
+
+.day-selector {
+  width: 100%;
+  padding-bottom: 1rem;
+}
+
+/* Time selectors */
+.modal-time {
+  display: flex;
+  gap: 1em;
+}
+
+.modal-time input {
+  width: 95%;
+  margin: 0.1rem;
+}
+
+/* Color selector */
+.modal-color-selector-container {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  padding: 1rem;
+  width: 90%;
+  gap: 0.5rem;
+}
+
+.color-selector {
+  appearance: none;
+  -webkit-appearance: none;
+  width: 30px;
+  height: 30px;
+  border: none;
+  cursor: pointer;
+  margin-right: 0.5rem;
+  border-radius: 0.3em; /* optional, square with slight rounding */
+  display: inline-block;
+  position: relative;
+}
+
+.color-options {
+  display: flex;
+  gap: 5px;
+  margin-top: 6px;
+}
+
+.color-options input[type="radio"] {
+  display: none;
+}
+
+.color-box {
+  width: 24px;
+  height: 24px;
+  border-radius: 4px;
+  border: 2px solid transparent;
+  cursor: pointer;
+}
+
+.red {
+  background-color: hsl(0, 75%, 60%);
+}
+
+.blue {
+  background-color: hsl(200, 80%, 50%);
+}
+
+.green {
+  background-color: hsl(150, 80%, 30%);
+}
+
+.modal-footer {
+  display: flex;
+  align-items: center;
+  width: 100%;
+}
+
+/* Add button */
+.modal-add-btn {
+  background-color: hsla(150, 80%, 50%, 0.2);
+  color: black;
+  border: 2px solid hsl(150, 80%, 30%);
+  border-radius: 0.3rem;
+  margin: 0.5em auto;
+  width: 90%;
+  height: 3em;
+  cursor: pointer;
+}
+
+.modal-delete-btn {
+  background-color: #dc2626;
+  color: white;
+  border: none;
+  padding: 8px 14px;
+  border-radius: 6px;
+  cursor: pointer;
+}
+
+.modal-delete-btn:hover {
+  background-color: #b91c1c;
+}
