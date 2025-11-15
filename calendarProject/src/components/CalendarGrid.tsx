@@ -66,6 +66,7 @@ export default function CalendarGrid({
     })),
   ]
 
+  //sorts events by all day first and start time next
   function eventsForDate(y: number, m: number, d: number) {
     const key = `${y}-${m + 1}-${d}`
     const dayEvents = events.filter((e) => e.date === key)

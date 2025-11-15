@@ -5,26 +5,27 @@
   left: 0;
   width: 100vw;
   height: 100vh;
-  display: flex; /* flex to center modal */
+  display: flex; 
   justify-content: center;
   align-items: center;
   z-index: 10;
-  background-color: hsla(0, 0%, 0%, 0.4); /* Softer overlay */
+  background-color: hsla(0, 0%, 0%, 0.4); 
 }
 
 /* Modal container */
 .modal-container {
-  background-color: hsl(0, 0%, 100%); /* white */
+  background-color: hsl(0, 0%, 100%); 
   border-radius: 0.3em;
   width: 350px;
   max-width: 90%;
-  border: 2px solid #dadce0; /* button border token */
+  border: 3px solid #333; 
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
   animation: popIn 0.3s ease-out forwards;
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  padding: .5rem;
 }
 
 /* Header */
@@ -35,7 +36,7 @@
   gap: 1.3rem;
   width: 100%;
   padding: 0.5rem 1rem;
-  color: #555; /* Modal Date Header Text */
+  color: #555; 
   font-weight: bold;
 }
 
@@ -46,7 +47,7 @@
   background-color: transparent;
   border: none;
   font-size: x-large;
-  color: #333; /* Default Text */
+  color: #333; 
 }
 
 /* Body */
@@ -71,7 +72,7 @@
 .modal-event-input label {
   font-weight: bold;
   margin-bottom: 0.3rem;
-  color: #777; /* Modal Form Label Text */
+  color: #777; 
 }
 
 .day-selector {
@@ -119,17 +120,37 @@
   cursor: pointer;
 }
 
+.color-box:hover{
+  transform: scale(1.1);
+}
+
+
 .red {
   background-color: hsl(0, 75%, 60%); /* Red Event */
+}
+
+.red:hover{
+  box-shadow: 0 0 5px hsl(0, 75%, 40%);
 }
 
 .blue {
   background-color: hsl(200, 80%, 50%); /* Blue Event */
 }
 
+.blue:hover{
+    box-shadow: 0 0 5px hsl(200, 80%, 30%);
+
+}
+
 .green {
   background-color: hsl(150, 80%, 30%); /* Green Event */
 }
+
+.green:hover{
+  box-shadow: 0 0 5px hsl(150, 80%, 10%);
+;
+}
+
 
 /* Footer / Buttons */
 .modal-footer {
@@ -153,13 +174,13 @@
 }
 
 .modal-add-btn:hover {
-  background-color: hsl(150, 80%, 90%); /* Save/Add Button Hover Background */
+  background-color: hsl(150, 80%, 90%); 
 }
 
 .modal-delete-btn {
-  background-color: hsl(0, 75%, 95%); /* Delete Button Background */
-  color: hsl(0, 75%, 10%); /* Delete Button Text */
-  border: 2px solid hsl(0, 75%, 60%); /* Delete Button Border */
+  background-color: hsl(0, 75%, 95%); 
+  color: hsl(0, 75%, 10%); 
+  border: 2px solid hsl(0, 75%, 60%);
   border-radius: 6px;
   cursor: pointer;
   width: 90%;
@@ -169,7 +190,7 @@
 }
 
 .modal-delete-btn:hover {
-  background-color: hsl(0, 75%, 90%); /* Delete Button Hover Background */
+  background-color: hsl(0, 75%, 90%); 
 }
 
 /* Animation */

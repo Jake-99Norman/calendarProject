@@ -140,7 +140,6 @@ body {
   background-color: #e6f7ff;
 }
 
-/* Day number */
 .day-number {
   display: inline-block;
   padding: 4px 6px;
@@ -148,7 +147,6 @@ body {
   font-weight: normal;
 }
 
-/* Today */
 .today .day-number {
   background: var(--today-bg);
   color: var(--today-text);
@@ -159,7 +157,6 @@ body {
   align-items: center;
   justify-content: center;
   margin: 0 auto;
-  font-weight: 600;
 }
 
 /* Faded / out-of-month days */
@@ -215,7 +212,7 @@ body {
 
 .event {
   display: block;
-  width: 90%;
+  width: 95%;
   padding: 4px;
   margin: 2px 0;
   border-radius: 8px;
@@ -224,6 +221,11 @@ body {
   transition: transform 0.2s;
   color: #333;
   font-weight: bold;
+  transition: transform 0.2 ease, box-shadow 0.2s ease;
+}
+
+.event:hover{
+  transform: scale(1.05);
 }
 
 .event.red {
@@ -244,7 +246,6 @@ body {
   color: #444;
 }
 
-/* Overflow button */
 .overflow-btn {
   margin-top: 4px;
   background: transparent;
