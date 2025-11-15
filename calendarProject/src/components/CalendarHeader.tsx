@@ -6,7 +6,7 @@ export type CalendarHeaderProps = {
   onToday: () => void
 }
 
-export function CalendarHeader({
+export default function CalendarHeader({
   monthName,
   year,
   onPrev,

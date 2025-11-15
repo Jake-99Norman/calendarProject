@@ -1,26 +1,31 @@
-import type { Event } from "./types";
-import "./OverflowModal.css";
-import "./modalAnimations.css";
-import { useModalAnimation } from "../useModalAnimation";
+import type { Event } from "../types/types"
+import "./OverflowModal.css"
+import { useModalAnimation } from "../hooks/useModalAnimation"
 
 type OverflowModalProps = {
-  events: Event[];
-  date: string;
-  onClose: () => void;
-};
+  events: Event[]
+  date: string
+  onClose: () => void
+}
 
-export default function OverflowModal({ events, date, onClose }: OverflowModalProps) {
-  const d = new Date(date);
-  const formattedDate = `${d.getMonth() + 1}/${d.getDate()}/${d.getFullYear()}`;
+export default function OverflowModal({
+  events,
+  date,
+  onClose,
+}: OverflowModalProps) {
+  const d = new Date(date)
+  const formattedDate = `${d.getMonth() + 1}/${d.getDate()}/${d.getFullYear()}`
 
-  const { closing, animateClose } = useModalAnimation(onClose);
+  const { closing, animateClose } = useModalAnimation(onClose)
 
-  const handleClose = () => animateClose();
+  const handleClose = () => animateClose()
 
   return (
     <div className="overflow-modal-overlay" onClick={handleClose}>
       <div
-        className={`overflow-modal-container ${closing ? "modal-close" : "modal-open"}`}
+        className={`overflow-modal-container ${
+          closing ? "modal-close" : "modal-open"
+        }`}
         onClick={(e) => e.stopPropagation()}
       >
         <header className="overflow-modal-header">
@@ -44,5 +49,5 @@ export default function OverflowModal({ events, date, onClose }: OverflowModalPr
         </div>
       </div>
     </div>
-  );
+  )
 }
