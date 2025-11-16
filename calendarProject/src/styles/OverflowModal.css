@@ -67,7 +67,6 @@
   cursor: pointer;
   transition: transform 0.2s ease, box-shadow 0.2s ease;
   font-weight: bold;
-  color: white;
   text-align: center;
   width: 95%; 
 }
