@@ -168,7 +168,6 @@ body {
 
 .day.past-day {
   color: #999;
-  background-color: var(--out-month-bg);
   cursor: not-allowed;
   pointer-events: none;
 }
@@ -224,7 +223,7 @@ body {
   transition: transform 0.2 ease, box-shadow 0.2s ease;
 }
 
-.event:hover{
+.event:hover {
   transform: scale(1.05);
 }
 
