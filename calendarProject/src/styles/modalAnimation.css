@@ -1,0 +1,18 @@
+@keyframes modalGrow {
+    0% { transform: scale(0.8); opacity: 0; }
+    100% {transform: scale(1); opacity: 1;}
+}
+
+@keyframes modalShrink {
+    0% { transform: scale(1); opacity: 1;}
+    100% { transform: scale(0.8); opacity: 0;}
+}
+
+
+.modal-open {
+    animation: modalGrow 0.25s ease-out forwards;
+}
+
+.modal-close {
+    animation: modalShrink 0.25s ease-out forwards;
+}

@@ -1,4 +1,3 @@
-
 GitHub Repo 
 https://github.com/Jake-99Norman/calendarProject/tree/main
 
@@ -18,7 +17,7 @@ The calendar should work immediately.
 
 
 An interactive React/typescript calendar which lets you add events, edit events, view any overflows and traverse the calendar for future events.
-- Month view calendar with previous/next month dates.
+- Month view calendar with previous/nex month dates.
 - Highlight current day.
 - Display up to a certain number of events per day, with an overflow button for extra events.
 - Support for all day events and events with specific start and end times.
@@ -104,7 +103,6 @@ Render the calendar
   onEventClick={handleEventClick}
   onOverflowClick={handleOverflowClick}
 />
-
 
 
 
