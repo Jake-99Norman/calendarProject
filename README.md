@@ -1,73 +1,108 @@
-# React + TypeScript + Vite
+GitHub Repo 
+https://github.com/Jake-99Norman/calendarProject/tree/main
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+to run locally
+npm install
+npm start
+npm run build
 
-Currently, two official plugins are available:
+for CodeSandbox
+Open https://codesandbox.io/
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) (or [oxc](https://oxc.rs) when used in [rolldown-vite](https://vite.dev/guide/rolldown)) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+Create a new React project.
 
-## React Compiler
+Copy the src/ folder and package.json dependencies.
 
-The React Compiler is currently not compatible with SWC. See [this issue](https://github.com/vitejs/vite-plugin-react/issues/428) for tracking the progress.
+The calendar should work immediately.
 
-## Expanding the ESLint configuration
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+An interactive React/typescript calendar which lets you add events, edit events, view any overflows and traverse the calendar for future events.
+- Month view calendar with previous/next month dates.
+- Highlight current day.
+- Display up to a certain number of events per day, with an overflow button for extra events.
+- Support for all day events and events with specific start and end times.
+- Memoized componets for performance optimization.
+- Reusable components: CalendarGrid, DayCell, EventItem.
+- Customizable weekday, event colors and max events per day.
 
-```js
-export default defineConfig([
-  globalIgnores(['dist']),
+Dependencies 
+React 18+
+React DOM 
+TypeScript (optional but recommended for type safety)
+
+
+# Using npm
+npm install react react-dom
+
+# If using TypeScript
+npm install --save-dev typescript @types/react @types/react-dom
+
+CodeSandbox these are usually pre-installed
+
+
+
+File Structure
+src/
+ ├─ components/
+ │   ├─ CalendarGrid.tsx
+ │   ├─ DayCell.tsx
+ │   └─ EventItem.tsx
+ ├─ hooks/
+ │   └─ useCalendar.ts
+ ├─ types/
+ │   └─ types.ts
+ ├─ App.tsx
+ └─ index.tsx
+
+ import calendar component
+-import CalendarGrid from "./components/CalendarGrid";
+-import type { Event } from "./types/types";
+
+Prepare events data
+const events: Event[] = [
   {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-
-      // Remove tseslint.configs.recommended and replace with this
-      tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      tseslint.configs.stylisticTypeChecked,
-
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
+    id: "1",
+    title: "Meeting with team",
+    date: "2025-11-15",
+    startTime: "14:30",
+    allDay: false,
+    color: "#f00",
   },
-])
-```
-
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
-
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
-
-export default defineConfig([
-  globalIgnores(['dist']),
   {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
+    id: "2",
+    title: "All-day conference",
+    date: "2025-11-16",
+    allDay: true,
+    color: "#0a0",
   },
-])
-```
+];
+
+
+Add handlers for interaction
+
+function handleDayClick(date: string) {
+  console.log("Clicked day:", date);
+}
+
+function handleEventClick(event: Event) {
+  console.log("Clicked event:", event);
+}
+
+function handleOverflowClick(date: string, events: Event[]) {
+  console.log("Overflow events for", date, events);
+}
+
+
+Render the calendar
+<CalendarGrid
+  month={10} // November (0-based)
+  year={2025}
+  today={new Date()}
+  events={events}
+  onDayClick={handleDayClick}
+  onEventClick={handleEventClick}
+  onOverflowClick={handleOverflowClick}
+/>
+
+
+
