@@ -1,4 +1,4 @@
-import { useMemo, useCallback } from "react";
+import React, { useMemo, useCallback } from "react";
 import type { Event } from "../types/types";
 
 const WEEKDAYS = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
@@ -12,6 +12,113 @@ type CalendarGridProps = {
   onEventClick: (event: Event) => void;
   onOverflowClick?: (date: string, events: Event[]) => void;
 };
+
+type DayCellProps = {
+  day: number;
+  month: number;
+  year: number;
+  isCurrentMonth: boolean;
+  isToday: boolean;
+  isPast: boolean;
+  dayEvents: Event[];
+  onDayClick: (date: string) => void;
+  onEventClick: (event: Event) => void;
+  onOverflowClick?: (date: string, events: Event[]) => void;
+  formatTime: (time?: string) => string;
+  maxEvents: number;
+};
+
+const EventItem = React.memo(function EventItem({
+  ev,
+  onEventClick,
+  formatTime,
+}: {
+  ev: Event;
+  onEventClick: (event: Event) => void;
+  formatTime: (time?: string) => string;
+}) {
+  const style = useMemo(() => ({ backgroundColor: ev.color ?? "#888" }), [ev.color]);
+  return (
+    <div
+      className="event"
+      style={style}
+      onClick={(e) => {
+        e.stopPropagation();
+        onEventClick(ev);
+      }}
+    >
+      {ev.title}{" "}
+      {(ev.allDay || ev.startTime) && (
+        <span className="event-meta">
+          {ev.allDay ? "(All Day Event)" : `(${formatTime(ev.startTime)})`}
+        </span>
+      )}
+    </div>
+  );
+});
+
+const DayCell = React.memo(function DayCell({
+  day,
+  month,
+  year,
+  isCurrentMonth,
+  isToday,
+  isPast,
+  dayEvents,
+  onDayClick,
+  onEventClick,
+  onOverflowClick,
+  formatTime,
+  maxEvents,
+}: DayCellProps) {
+  const dateKey = `${year}-${month + 1}-${day}`;
+  const hasOverflow = dayEvents.length > maxEvents;
+
+  const handleDayClick = useCallback(() => {
+    if (!isPast) onDayClick(dateKey);
+  }, [dateKey, isPast, onDayClick]);
+
+  const handleOverflowClick = useCallback(
+    (e: React.MouseEvent) => {
+      e.stopPropagation();
+      onOverflowClick?.(dateKey, dayEvents);
+    },
+    [dateKey, dayEvents, onOverflowClick]
+  );
+
+  return (
+    <div
+      className={`day ${!isCurrentMonth ? "faded" : ""} ${isToday ? "today" : ""} ${
+        isPast ? "past-day" : ""
+      }`}
+      onClick={handleDayClick}
+    >
+      <div className="day-number">{day}</div>
+
+      {!isPast && (
+        <button
+          className="add-event-btn"
+          onClick={(e) => {
+            e.stopPropagation();
+            onDayClick(dateKey);
+          }}
+        >
+          +
+        </button>
+      )}
+
+      {dayEvents.slice(0, maxEvents).map((ev) => (
+        <EventItem key={ev.id} ev={ev} onEventClick={onEventClick} formatTime={formatTime} />
+      ))}
+
+      {hasOverflow && onOverflowClick && (
+        <button className="overflow-btn" onClick={handleOverflowClick}>
+          +{dayEvents.length - maxEvents} more
+        </button>
+      )}
+    </div>
+  );
+});
 
 export default function CalendarGrid({
   month,
@@ -102,74 +209,31 @@ export default function CalendarGrid({
             const { day, month: m, year: y, isCurrentMonth } = cell;
             const dateKey = `${y}-${m + 1}-${day}`;
             const dayEvents = eventsByDate.get(dateKey) ?? [];
-
             const cellDate = new Date(y, m, day);
             const isToday =
               today.getFullYear() === y &&
               today.getMonth() === m &&
               today.getDate() === day;
-
             const isPast =
               isCurrentMonth &&
               cellDate < new Date(today.getFullYear(), today.getMonth(), today.getDate());
 
-            const hasOverflow = dayEvents.length > maxEvents;
-
             return (
-              <div
+              <DayCell
                 key={dateKey}
-                className={`day ${!isCurrentMonth ? "faded" : ""} ${
-                  isToday ? "today" : ""
-                } ${isPast ? "past-day" : ""}`}
-                onClick={() => !isPast && onDayClick(dateKey)}
-              >
-                <div className="day-number">{day}</div>
-
-                {!isPast && (
-                  <button
-                    className="add-event-btn"
-                    onClick={(e) => {
-                      e.stopPropagation();
-                      onDayClick(dateKey);
-                    }}
-                  >
-                    +
-                  </button>
-                )}
-
-                {dayEvents.slice(0, maxEvents).map((ev) => (
-                  <div
-                    key={ev.id}
-                    className="event"
-                    style={{ backgroundColor: ev.color ?? "#888" }}
-                    onClick={(e) => {
-                      e.stopPropagation();
-                      onEventClick(ev);
-                    }}
-                  >
-                    {ev.title}{" "}
-                    {(ev.allDay || ev.startTime) && (
-                      <span className="event-meta">
-                        {ev.allDay
-                          ? "(All Day Event)"
-                          : `(${formatTime(ev.startTime)})`}
-                      </span>
-                    )}
-                  </div>
-                ))}
-
-                {hasOverflow && onOverflowClick && (
-                  <button
-                    className="overflow-btn"
-                    onClick={(e) => {
-                      e.stopPropagation();
-                      onOverflowClick(dateKey, dayEvents);
-                    }}
-                  >
-                    +{dayEvents.length - maxEvents} more
-                  </button>
-                )}
-              </div>
+                day={day}
+                month={m}
+                year={y}
+                isCurrentMonth={isCurrentMonth}
+                isToday={isToday}
+                isPast={isPast}
+                dayEvents={dayEvents}
+                onDayClick={onDayClick}
+                onEventClick={onEventClick}
+                onOverflowClick={onOverflowClick}
+                formatTime={formatTime}
+                maxEvents={maxEvents}
+              />
             );
           })}
         </div>
