@@ -1,17 +1,17 @@
-import { useEffect, useRef, useState } from "react"
-import type { Event } from "../types/types"
+import { useEffect, useRef, useState } from "react";
+import type { Event } from "../types/types";
 
-const WEEKDAYS = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"]
+const WEEKDAYS = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
 
 type CalendarGridProps = {
-  month: number
-  year: number
-  today: Date
-  events: Event[]
-  onDayClick: (date: string) => void
-  onEventClick: (event: Event) => void
-  onOverflowClick?: (date: string, events: Event[]) => void
-}
+  month: number;
+  year: number;
+  today: Date;
+  events: Event[];
+  onDayClick: (date: string) => void;
+  onEventClick: (event: Event) => void;
+  onOverflowClick?: (date: string, events: Event[]) => void;
+};
 
 export default function CalendarGrid({
   month,
@@ -22,28 +22,26 @@ export default function CalendarGrid({
   onEventClick,
   onOverflowClick,
 }: CalendarGridProps) {
-  const [resizeTick, setResizeTick] = useState(0)
-  const calendarRef = useRef<HTMLDivElement>(null)
+  const [resizeTick, setResizeTick] = useState(0);
+  const calendarRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
-    if (!calendarRef.current) return
+    if (!calendarRef.current) return;
+    const observer = new ResizeObserver(() => setResizeTick((prev) => prev + 1));
+    observer.observe(calendarRef.current);
+    return () => observer.disconnect();
+  }, []);
 
-    const observer = new ResizeObserver(() => setResizeTick((prev) => prev + 1))
-    observer.observe(calendarRef.current)
+  const daysInMonth = new Date(year, month + 1, 0).getDate();
+  const firstDayOfWeek = new Date(year, month, 1).getDay();
 
-    return () => observer.disconnect()
-  }, [])
+  const prevMonth = month === 0 ? 11 : month - 1;
+  const prevMonthYear = month === 0 ? year - 1 : year;
+  const daysInPrevMonth = new Date(prevMonthYear, prevMonth + 1, 0).getDate();
 
-  const daysInMonth = new Date(year, month + 1, 0).getDate()
-  const firstDayOfWeek = new Date(year, month, 1).getDay()
-
-  const prevMonth = month === 0 ? 11 : month - 1
-  const prevMonthYear = month === 0 ? year - 1 : year
-  const daysInPrevMonth = new Date(prevMonthYear, prevMonth + 1, 0).getDate()
-
-  const leadingDays = firstDayOfWeek
-  const totalCells = 42
-  const trailingDays = totalCells - (leadingDays + daysInMonth)
+  const leadingDays = firstDayOfWeek;
+  const totalCells = 42;
+  const trailingDays = totalCells - (leadingDays + daysInMonth);
 
   const calendarCells = [
     ...Array.from({ length: leadingDays }, (_, i) => ({
@@ -64,23 +62,33 @@ export default function CalendarGrid({
       year: month === 11 ? year + 1 : year,
       isCurrentMonth: false,
     })),
-  ]
+  ];
 
-  //sorts events by all day first and start time next
-  function eventsForDate(y: number, m: number, d: number) {
-    const key = `${y}-${m + 1}-${d}`
-    const dayEvents = events.filter((e) => e.date === key)
-
-    return dayEvents.sort((a, b) => {
-      if (a.allDay && !b.allDay) return -1
-      if (!a.allDay && b.allDay) return 1
-      if (a.startTime && b.startTime)
-        return a.startTime.localeCompare(b.startTime)
-      return 0
-    })
+  // Convert military time ("HH:mm") to 12-hour format
+  function formatTimeTo12Hour(time?: string) {
+    if (!time) return "";
+    const [hourStr, minStr] = time.split(":");
+    let hour = parseInt(hourStr, 10);
+    const minute = parseInt(minStr, 10);
+    const ampm = hour >= 12 ? "PM" : "AM";
+    hour = hour % 12 || 12; // convert 0 => 12
+    return `${hour}:${minute.toString().padStart(2, "0")} ${ampm}`;
   }
 
-  const maxEvents = 5
+  // sorts events by all day first and start time next
+  function eventsForDate(y: number, m: number, d: number) {
+    const key = `${y}-${m + 1}-${d}`;
+    const dayEvents = events.filter((e) => e.date === key);
+
+    return dayEvents.sort((a, b) => {
+      if (a.allDay && !b.allDay) return -1;
+      if (!a.allDay && b.allDay) return 1;
+      if (a.startTime && b.startTime) return a.startTime.localeCompare(b.startTime);
+      return 0;
+    });
+  }
+
+  const maxEvents = 5;
 
   return (
     <div className="calendar-container" ref={calendarRef}>
@@ -97,27 +105,26 @@ export default function CalendarGrid({
         {/* 42-Day Grid */}
         <div className="calendar-grid">
           {calendarCells.map((cell, i) => {
-            const { day, month: m, year: y, isCurrentMonth } = cell
-            const dayEvents = eventsForDate(y, m, day)
+            const { day, month: m, year: y, isCurrentMonth } = cell;
+            const dayEvents = eventsForDate(y, m, day);
 
-            const cellDate = new Date(y, m, day)
+            const cellDate = new Date(y, m, day);
             const isToday =
               day === today.getDate() &&
               m === today.getMonth() &&
-              y === today.getFullYear()
+              y === today.getFullYear();
 
             const isPast =
               isCurrentMonth &&
-              cellDate <
-                new Date(today.getFullYear(), today.getMonth(), today.getDate())
-            const hasOverflow = dayEvents.length > maxEvents
+              cellDate < new Date(today.getFullYear(), today.getMonth(), today.getDate());
+            const hasOverflow = dayEvents.length > maxEvents;
 
             return (
               <div
                 key={`${i}-${resizeTick}`}
-                className={`day ${!isCurrentMonth ? "faded" : ""} ${
-                  isToday ? "today" : ""
-                } ${isPast ? "past-day" : ""}`}
+                className={`day ${!isCurrentMonth ? "faded" : ""} ${isToday ? "today" : ""} ${
+                  isPast ? "past-day" : ""
+                }`}
                 onClick={() => !isPast && onDayClick(`${y}-${m + 1}-${day}`)}
               >
                 <div className="day-number">{day}</div>
@@ -126,8 +133,8 @@ export default function CalendarGrid({
                   <button
                     className="add-event-btn"
                     onClick={(e) => {
-                      e.stopPropagation() // prevent triggering the day click
-                      onDayClick(`${y}-${m + 1}-${day}`)
+                      e.stopPropagation();
+                      onDayClick(`${y}-${m + 1}-${day}`);
                     }}
                   >
                     +
@@ -140,16 +147,14 @@ export default function CalendarGrid({
                     className="event"
                     style={{ backgroundColor: event.color ?? "#888" }}
                     onClick={(e) => {
-                      e.stopPropagation()
-                      onEventClick(event)
+                      e.stopPropagation();
+                      onEventClick(event);
                     }}
                   >
                     {event.title}{" "}
                     {(event.allDay || event.startTime) && (
                       <span className="event-meta">
-                        {event.allDay
-                          ? "(All Day Event)"
-                          : `(${event.startTime})`}
+                        {event.allDay ? "(All Day Event)" : `(${formatTimeTo12Hour(event.startTime)})`}
                       </span>
                     )}
                   </div>
@@ -159,18 +164,18 @@ export default function CalendarGrid({
                   <button
                     className="overflow-btn"
                     onClick={(e) => {
-                      e.stopPropagation()
-                      onOverflowClick(`${y}-${m + 1}-${day}`, dayEvents)
+                      e.stopPropagation();
+                      onOverflowClick(`${y}-${m + 1}-${day}`, dayEvents);
                     }}
                   >
                     +{dayEvents.length - maxEvents} more
                   </button>
                 )}
               </div>
-            )
+            );
           })}
         </div>
       </div>
     </div>
-  )
+  );
 }

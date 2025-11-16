@@ -155,10 +155,10 @@
 /* Footer / Buttons */
 .modal-footer {
   display: flex;
-  flex-direction: column;
   align-items: center;
   width: 100%;
-  padding-bottom: 1rem;
+  padding-bottom: .5rem;
+  gap: 5px;
 }
 
 .modal-add-btn {
@@ -184,6 +184,7 @@
   border-radius: 6px;
   cursor: pointer;
   width: 90%;
+  height: 3em;
   padding: 8px 14px;
   margin: 0.5rem auto;
   transition: background-color 0.2s ease;
