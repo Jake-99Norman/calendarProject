@@ -7,7 +7,7 @@ type OverflowModalProps = {
   events: Event[]
   date: string
   onClose: () => void
-  onEventClick: (event: Event) => void // NEW: callback for editing
+  onEventClick: (event: Event) => void 
 }
 
 export default function OverflowModal({

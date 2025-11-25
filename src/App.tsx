@@ -1,31 +1,34 @@
 import { useState } from "react"
 import CalendarHeader from "./components/CalendarHeader"
 import CalendarGrid from "./components/CalendarGrid"
-import "./styles/calendar.css"
+// import "./styles/calendar.css"
 import EditEventModal from "./components/EditEventModal"
 import OverflowModal from "./components/OverflowModal"
-import type { Event } from "./types/types"
 import Modal from "./components/Modal"
 import { useLocalStorage } from "./hooks/useLocalStorage"
+import type { Event } from "./types/types"
+
 
 export default function App() {
   const today = new Date()
 
+  // Global State 
   const [month, setMonth] = useState(today.getMonth())
   const [year, setYear] = useState(today.getFullYear())
   const [events, setEvents] = useLocalStorage<Event[]>("calendar-events", [])
 
-  // --- Modal state ---
+  // Modal state 
   const [selectedDate, setSelectedDate] = useState<string | null>(null) // Add Event
   const [editingEvent, setEditingEvent] = useState<Event | null>(null) // Edit Event
   const [overflowDate, setOverflowDate] = useState<string | null>(null) // Overflow Modal
   const [overflowEvents, setOverflowEvents] = useState<Event[]>([])
 
+  // Month Name
   const monthName = new Date(year, month).toLocaleString("default", {
     month: "long",
   })
 
-  // --- Month Navigation ---
+  //  Month Navigation
   function handlePrevMonth() {
     if (month === 0) {
       setMonth(11)
@@ -49,7 +52,7 @@ export default function App() {
     setYear(today.getFullYear())
   }
 
-  // --- Event Handlers ---
+  // Event Handlers 
   function handleAddEvent(newEvent: Event) {
     setEvents((prev) => [...prev, newEvent])
     setSelectedDate(null)
@@ -67,18 +70,18 @@ export default function App() {
     setEditingEvent(null)
   }
 
-  function onDayClick(date: string) {
-    setSelectedDate(date)
-  }
+  // function onDayClick(date: string) {
+  //   setSelectedDate(date)
+  // }
 
-  function onEventClick(event: Event) {
-    setEditingEvent(event)
-  }
+  // function onEventClick(event: Event) {
+  //   setEditingEvent(event)
+  // }
 
-  function onOverflowClick(date: string, dayEvents: Event[]) {
-    setOverflowDate(date)
-    setOverflowEvents(dayEvents)
-  }
+  // function onOverflowClick(date: string, dayEvents: Event[]) {
+  //   setOverflowDate(date)
+  //   setOverflowEvents(dayEvents)
+  // }
 
   return (
     <div>
@@ -123,8 +126,8 @@ export default function App() {
           events={overflowEvents}
           onClose={() => setOverflowDate(null)}
           onEventClick={(event) => {
-            setEditingEvent(event) // open edit modal
-            setOverflowDate(null) // close overflow modal
+            setEditingEvent(event) 
+            setOverflowDate(null)
           }}
         />
       )}
