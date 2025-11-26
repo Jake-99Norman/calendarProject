@@ -129,6 +129,16 @@ export default function Modal({ date, onClose, addEvent }: ModalProps) {
 
               <input
                 type="radio"
+                id="color-green"
+                name="color"
+                value="hsl(150, 80%, 30%)"
+                checked={color === "hsl(150, 80%, 30%)"}
+                onChange={(e) => setColor(e.target.value)}
+              />
+              <label htmlFor="color-green" className={`${styles.colorBox} ${styles.green}`}></label>
+
+               <input
+                type="radio"
                 id="color-blue"
                 name="color"
                 value="hsl(200, 80%, 50%)"
@@ -137,15 +147,6 @@ export default function Modal({ date, onClose, addEvent }: ModalProps) {
               />
               <label htmlFor="color-blue" className={`${styles.colorBox} ${styles.blue}`}></label>
 
-              <input
-                type="radio"
-                id="color-green"
-                name="color"
-                value="hsl(150, 80%, 30%)"
-                checked={color === "hsl(150, 80%, 30%)"}
-                onChange={(e) => setColor(e.target.value)}
-              />
-              <label htmlFor="color-green" className={`${styles.colorBox} ${styles.green}`}></label>
 
               <input
                 type="radio"
