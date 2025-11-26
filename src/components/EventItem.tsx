@@ -1,34 +1,39 @@
-import React, { useMemo } from "react";
 import type { Event } from "../types/types";
 
 type EventItemProps = {
-  ev: Event;
-  onEventClick: (event: Event) => void;
-  formatTime: (time?: string) => string;
+  event: Event;
+  onClick: (e: React.MouseEvent<HTMLDivElement, MouseEvent>) => void;
 };
 
-export const EventItem = React.memo(function EventItem({
-  ev,
-  onEventClick,
-  formatTime,
-}: EventItemProps) {
-  const style = useMemo(() => ({ backgroundColor: ev.color ?? "#888" }), [ev.color]);
+export default function EventItem({ event, onClick }: EventItemProps) {
+  // Format time from "HH:MM" to "h:mm AM/PM"
+  function formatTime(time?: string) {
+    if (!time) return "";
+    const [h, m] = time.split(":");
+    let hour = parseInt(h, 10);
+    const minute = parseInt(m, 10);
+    const ampm = hour >= 12 ? "PM" : "AM";
+    hour = hour % 12 || 12;
+    return `${hour}:${minute.toString().padStart(2, "0")} ${ampm}`;
+  }
 
   return (
     <div
-      className="event"
-      style={style}
-      onClick={(e) => {
-        e.stopPropagation();
-        onEventClick(ev);
-      }}
+      className="event-item"
+      style={{ borderLeftColor: event.color || "var(--event-blue)" }}
+      onClick={onClick} // MouseEvent is handled by parent (DayCell)
     >
-      {ev.title}{" "}
-      {(ev.allDay || ev.startTime) && (
-        <span className="event-meta">
-          {ev.allDay ? "(All Day Event)" : `(${formatTime(ev.startTime)})`}
-        </span>
+      <div className="event-title">{event.title}</div>
+
+      {/* Show time only if not all-day */}
+      {!event.allDay && (
+        <div className="event-time">
+          {event.startTime && formatTime(event.startTime)}
+          {event.endTime && ` - ${formatTime(event.endTime)}`}
+        </div>
       )}
+
+      {event.allDay && <div className="event-time">All Day</div>}
     </div>
   );
-});
+}

@@ -70,18 +70,18 @@ export default function App() {
     setEditingEvent(null)
   }
 
-  // function onDayClick(date: string) {
-  //   setSelectedDate(date)
-  // }
+  function onDayClick(date: string) {
+    setSelectedDate(date)
+  }
 
-  // function onEventClick(event: Event) {
-  //   setEditingEvent(event)
-  // }
+  function onEventClick(event: Event) {
+    setEditingEvent(event)
+  }
 
-  // function onOverflowClick(date: string, dayEvents: Event[]) {
-  //   setOverflowDate(date)
-  //   setOverflowEvents(dayEvents)
-  // }
+  function onOverflowClick(date: string, dayEvents: Event[]) {
+    setOverflowDate(date)
+    setOverflowEvents(dayEvents)
+  }
 
   return (
     <div>

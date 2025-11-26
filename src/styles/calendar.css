@@ -1,6 +1,4 @@
-/* =========================
-   VARIABLES & BASE STYLES
-   ========================= */
+
 :root {
   /* Event colors */
   --event-red: hsl(0, 75%, 60%);
@@ -47,9 +45,8 @@ body {
   background-color: #fafafa;
 }
 
-/* =========================
+
    CALENDAR LAYOUT
-   ========================= */
 .calendar-container {
   display: flex;
   justify-content: center;
@@ -85,9 +82,7 @@ body {
   cursor: pointer;
 }
 
-/* =========================
-   WEEKDAY HEADER
-   ========================= */
+
 .weekday-row {
   display: grid;
   grid-template-columns: repeat(7, 1fr);
@@ -109,17 +104,13 @@ body {
   border-bottom: 1px solid #ccc;
 }
 
-/* =========================
-   CALENDAR GRID
-   ========================= */
+
 .calendar-grid {
   display: grid;
   grid-template-columns: repeat(7, 1fr);
 }
 
-/* =========================
-   DAY CELLS
-   ========================= */
+
 .day {
   display: flex;
   flex-direction: column;
