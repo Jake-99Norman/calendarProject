@@ -179,7 +179,7 @@ export default function EditModal({
           </button>
           <button
             className="modal-delete-btn"
-            type="button"  // added delete button from modal
+            type="button" // added delete button from modal
             onClick={handleDelete}
           >
             Delete

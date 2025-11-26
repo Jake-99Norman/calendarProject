@@ -1,13 +1,13 @@
-import type { Event } from "../types/types"
+import type { Event } from "../../types/types"
 import "../styles/OverflowModal.css"
-import { useModalAnimation } from "../hooks/useModalAnimation"
+import { useModalAnimation } from "../../hooks/useModalAnimation"
 import "../styles/modalAnimation.css"
 
 type OverflowModalProps = {
   events: Event[]
   date: string
   onClose: () => void
-  onEventClick: (event: Event) => void 
+  onEventClick: (event: Event) => void
 }
 
 export default function OverflowModal({
@@ -26,7 +26,9 @@ export default function OverflowModal({
   return (
     <div className="overflow-modal-overlay" onClick={handleClose}>
       <div
-        className={`overflow-modal-container ${closing ? "modal-close" : "modal-open"}`}
+        className={`overflow-modal-container ${
+          closing ? "modal-close" : "modal-open"
+        }`}
         onClick={(e) => e.stopPropagation()}
       >
         <header className="overflow-modal-header">
@@ -44,7 +46,7 @@ export default function OverflowModal({
               style={{ backgroundColor: event.color }}
               onClick={() => {
                 onEventClick(event) // OPEN EDIT MODAL
-                handleClose()        // Close overflow modal
+                handleClose() // Close overflow modal
               }}
             >
               {event.allDay ? "(All Day) " : ""}

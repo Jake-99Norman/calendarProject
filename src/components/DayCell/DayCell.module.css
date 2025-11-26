@@ -1,0 +1,51 @@
+.day {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+  position: relative;
+  border: 1px solid #ccc;
+  border-top: none;
+  min-height: 100px;
+  padding: 6px;
+  text-align: left;
+  background: white;
+  transition: background-color 0.2s ease;
+  cursor: pointer;
+  aspect-ratio: 1/1;
+}
+
+.day:hover {
+  background-color: #e6f7ff;
+}
+
+.dayNumber {
+  display: inline-block;
+  padding: 4px 6px;
+  border-radius: 4px;
+  font-weight: normal;
+}
+
+.today .dayNumber {
+  background: var(--today-bg);
+  color: var(--today-text);
+  width: 22px;
+  height: 22px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 auto;
+}
+
+.faded {
+  opacity: 0.6;
+  background-color: var(--out-month-bg);
+  color: #999;
+}
+
+.pastDay {
+  color: #999;
+  cursor: not-allowed;
+  pointer-events: none;
+}

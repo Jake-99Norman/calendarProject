@@ -1,23 +1,22 @@
 import { useState } from "react"
-import CalendarHeader from "./components/CalendarHeader"
-import CalendarGrid from "./components/CalendarGrid"
+import CalendarHeader from "./components/CalendarHeader/CalendarHeader"
+import CalendarGrid from "./components/CalendarGrid/CalendarGrid"
 // import "./styles/calendar.css"
 import EditEventModal from "./components/EditEventModal"
-import OverflowModal from "./components/OverflowModal"
+import OverflowModal from "./components/OverflowModal/OverflowModal"
 import Modal from "./components/Modal"
 import { useLocalStorage } from "./hooks/useLocalStorage"
 import type { Event } from "./types/types"
 
-
 export default function App() {
   const today = new Date()
 
-  // Global State 
+  // Global State
   const [month, setMonth] = useState(today.getMonth())
   const [year, setYear] = useState(today.getFullYear())
   const [events, setEvents] = useLocalStorage<Event[]>("calendar-events", [])
 
-  // Modal state 
+  // Modal state
   const [selectedDate, setSelectedDate] = useState<string | null>(null) // Add Event
   const [editingEvent, setEditingEvent] = useState<Event | null>(null) // Edit Event
   const [overflowDate, setOverflowDate] = useState<string | null>(null) // Overflow Modal
@@ -52,7 +51,7 @@ export default function App() {
     setYear(today.getFullYear())
   }
 
-  // Event Handlers 
+  // Event Handlers
   function handleAddEvent(newEvent: Event) {
     setEvents((prev) => [...prev, newEvent])
     setSelectedDate(null)
@@ -126,7 +125,7 @@ export default function App() {
           events={overflowEvents}
           onClose={() => setOverflowDate(null)}
           onEventClick={(event) => {
-            setEditingEvent(event) 
+            setEditingEvent(event)
             setOverflowDate(null)
           }}
         />

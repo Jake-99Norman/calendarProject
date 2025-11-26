@@ -1,0 +1,33 @@
+:root {
+  /* Event colors */
+  --event-red: hsl(0, 75%, 60%);
+  --event-blue: hsl(200, 80%, 50%);
+  --event-green: hsl(150, 80%, 30%);
+
+  /* Buttons */
+  --button-border: #dadce0;
+  --button-hover-bg: #f1f3f4;
+
+  /* Today */
+  --today-bg: hsl(200, 80%, 50%);
+  --today-text: white;
+
+  /* Text */
+  --default-text: #333;
+  --weekday-text: #777;
+
+  /* Out-of-month day */
+  --out-month-bg: #dadce0;
+
+  /* Delete button */
+  --delete-btn-border: hsl(0, 75%, 60%);
+  --delete-btn-bg: hsl(0, 75%, 95%);
+  --delete-btn-text: hsl(0, 75%, 10%);
+  --delete-btn-hover-bg: hsl(0, 75%, 90%);
+
+  /* Save/Add button */
+  --save-btn-border: hsl(150, 80%, 30%);
+  --save-btn-bg: hsl(150, 80%, 95%);
+  --save-btn-text: hsl(150, 80%, 10%);
+  --save-btn-hover-bg: hsl(150, 80%, 90%);
+}

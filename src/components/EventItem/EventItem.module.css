@@ -1,0 +1,84 @@
+.addEventBtn {
+  position: absolute;
+  top: 2px;
+  right: 2px;
+  color: var(--default-text);
+  background-color: transparent;
+  font-weight: bolder;
+  border: none;
+  border-radius: 50%;
+  width: 18px;
+  height: 18px;
+  font-size: 20px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0;
+  transition: opacity 0.2s;
+}
+
+.day:hover .addEventBtn {
+  opacity: 1;
+}
+
+.eventList {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  width: 100%;
+  align-items: center;
+}
+
+.event {
+  display: block;
+  width: 95%;
+  padding: 4px;
+  margin: 2px 0;
+  border-radius: 8px;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  color: #333;
+  font-weight: bold;
+}
+
+.event:hover {
+  transform: scale(1.05);
+}
+
+.red { background-color: var(--event-red); }
+.blue { background-color: var(--event-blue); }
+.green { background-color: var(--event-green); }
+
+.eventMeta {
+  font-size: 0.7rem;
+  font-style: italic;
+  margin-left: 2px;
+  color: #444;
+}
+
+
+.deleteBtn {
+  border: 1px solid var(--delete-btn-border);
+  background: var(--delete-btn-bg);
+  color: var(--delete-btn-text);
+  padding: 4px 8px;
+  border-radius: 6px;
+  cursor: pointer;
+}
+.deleteBtn:hover {
+  background: var(--delete-btn-hover-bg);
+}
+
+.saveBtn {
+  border: 1px solid var(--save-btn-border);
+  background: var(--save-btn-bg);
+  color: var(--save-btn-text);
+  padding: 4px 8px;
+  border-radius: 6px;
+  cursor: pointer;
+}
+.saveBtn:hover {
+  background: var(--save-btn-hover-bg);
+}

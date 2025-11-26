@@ -1,0 +1,24 @@
+.weekdayRow {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  text-align: center;
+  background: #f7f7f7;
+  border-bottom: 1px solid #ddd;
+}
+
+.weekday {
+  background-color: #f2f2f2;
+  text-align: center;
+  font-weight: bold;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 2.5rem;
+  color: var(--weekday-text);
+  border-bottom: 1px solid #ccc;
+}
+
+.calendarGrid {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+}
