@@ -1,4 +1,4 @@
-.header {
+.calendarHeader {
   display: flex;
   align-items: center;
   padding: 0.5rem 1rem;
@@ -11,4 +11,13 @@
   background-color: transparent;
   font-size: larger;
   cursor: pointer;
+}
+
+
+.todayBtn{
+  font-weight: bold;
+}
+
+.prevBtn,.nextBtn{
+  font-size: 1.2rem;
 }

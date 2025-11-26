@@ -1,4 +1,4 @@
-.day {
+.dayCell {
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -13,13 +13,14 @@
   transition: background-color 0.2s ease;
   cursor: pointer;
   aspect-ratio: 1/1;
+  
 }
 
-.day:hover {
+.dayCell:hover {
   background-color: #e6f7ff;
 }
 
-.dayNumber {
+.dayNumber { /* number inside of cell */
   display: inline-block;
   padding: 4px 6px;
   border-radius: 4px;
@@ -27,8 +28,8 @@
 }
 
 .today .dayNumber {
-  background: var(--today-bg);
-  color: var(--today-text);
+  background: var(--today-bg, #1800ff);
+  color: var(--today-text, white);
   width: 22px;
   height: 22px;
   border-radius: 50%;
@@ -38,14 +39,23 @@
   margin: 0 auto;
 }
 
-.faded {
+.notCurrent {
   opacity: 0.6;
-  background-color: var(--out-month-bg);
+  background-color: var(--out-month-bg, #f9f9f9);
   color: #999;
 }
 
-.pastDay {
+.past {
   color: #999;
   cursor: not-allowed;
   pointer-events: none;
+}
+
+.overflowBtn{
+  font-size: 0.8rem;
+  color: #555;
+  cursor: pointer;
+  background: none;
+  border: none;
+  margin-top: 2px;
 }

@@ -1,0 +1,198 @@
+.modalOverlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 10;
+  background-color: hsla(0, 0%, 0%, 0.4);
+}
+
+.modalContainer {
+  background-color: #fff;
+  border-radius: 0.3em;
+  width: 350px;
+  max-width: 90%;
+  border: 3px solid #333;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  animation: popIn 0.3s ease-out forwards;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  padding: 0.5rem;
+}
+
+.modalHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 1.3rem;
+  width: 100%;
+  padding: 0.5rem 1rem;
+  color: #555;
+  font-weight: bold;
+}
+
+.modalCloseBtn {
+  cursor: pointer;
+  height: 3rem;
+  width: 3rem;
+  background-color: transparent;
+  border: none;
+  font-size: x-large;
+  color: #333;
+}
+
+.modalBody {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 0.5rem;
+  width: 100%;
+}
+
+.modalEventInput {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  width: 100%;
+  padding: 1rem;
+}
+
+.modalEventInput label {
+  font-weight: bold;
+  margin-bottom: 0.3rem;
+  color: #777;
+}
+
+.daySelector {
+  width: 100%;
+  padding-bottom: 1rem;
+}
+
+.modalTime {
+  display: flex;
+  gap: 1em;
+  width: 100%;
+}
+
+.modalTime input {
+  width: 95%;
+  margin: 0.1rem;
+}
+
+.modalColorSelectorContainer {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  padding: 1rem;
+  width: 90%;
+  gap: 0.5rem;
+}
+
+.colorOptions {
+  display: flex;
+  gap: 5px;
+  margin-top: 6px;
+}
+
+.colorOptions input[type="radio"] {
+  display: none;
+}
+
+.colorBox {
+  width: 24px;
+  height: 24px;
+  border-radius: 4px;
+  border: 2px solid transparent;
+  cursor: pointer;
+}
+
+.colorBox:hover {
+  transform: scale(1.1);
+}
+
+.red {
+  background-color: hsl(0, 75%, 60%);
+}
+
+.red:hover {
+  box-shadow: 0 0 5px hsl(0, 75%, 40%);
+}
+
+.blue {
+  background-color: hsl(200, 80%, 50%);
+}
+
+.blue:hover {
+  box-shadow: 0 0 5px hsl(200, 80%, 30%);
+}
+
+.green {
+  background-color: hsl(150, 80%, 30%);
+}
+
+.green:hover {
+  box-shadow: 0 0 5px hsl(150, 80%, 10%);
+}
+
+.modalFooter {
+  display: flex;
+  align-items: center;
+  width: 100%;
+  padding-bottom: 0.5rem;
+  gap: 5px;
+}
+
+.modalAddBtn {
+  background-color: hsl(150, 80%, 95%);
+  color: hsl(150, 80%, 10%);
+  border: 2px solid hsl(150, 80%, 30%);
+  border-radius: 0.3rem;
+  width: 90%;
+  height: 3em;
+  margin: 0.5rem auto;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+}
+
+.modalAddBtn:hover {
+  background-color: hsl(150, 80%, 90%);
+}
+
+.modalDeleteBtn {
+  background-color: hsl(0, 75%, 95%);
+  color: hsl(0, 75%, 10%);
+  border: 2px solid hsl(0, 75%, 60%);
+  border-radius: 6px;
+  cursor: pointer;
+  width: 90%;
+  height: 3em;
+  padding: 8px 14px;
+  margin: 0.5rem auto;
+  transition: background-color 0.2s ease;
+}
+
+.modalDeleteBtn:hover {
+  background-color: hsl(0, 75%, 90%);
+}
+
+@keyframes popIn {
+  0% {
+    transform: scale(0.7);
+    opacity: 0;
+  }
+  80% {
+    transform: scale(1.05);
+    opacity: 1;
+  }
+  100% {
+    transform: scale(1);
+    opacity: 1;
+  }
+}

@@ -1,14 +1,13 @@
-import type { Event } from "../../types/types"
-import "./OverflowModal.css"
-import { useModalAnimation } from "../../hooks/useModalAnimation"
-import "../../styles/modalAnimation.css"
+import type { Event } from "../../types/types";
+import styles from "./OverflowModal.module.css";
+import { useModalAnimation } from "../../hooks/useModalAnimation";
 
 type OverflowModalProps = {
-  events: Event[]
-  date: string
-  onClose: () => void
-  onEventClick: (event: Event) => void
-}
+  events: Event[];
+  date: string;
+  onClose: () => void;
+  onEventClick: (event: Event) => void;
+};
 
 export default function OverflowModal({
   events,
@@ -16,37 +15,37 @@ export default function OverflowModal({
   onClose,
   onEventClick,
 }: OverflowModalProps) {
-  const d = new Date(date)
-  const formattedDate = `${d.getMonth() + 1}/${d.getDate()}/${d.getFullYear()}`
+  const d = new Date(date);
+  const formattedDate = `${d.getMonth() + 1}/${d.getDate()}/${d.getFullYear()}`;
 
-  const { closing, animateClose } = useModalAnimation(onClose)
+  const { closing, animateClose } = useModalAnimation(onClose);
 
-  const handleClose = () => animateClose()
+  const handleClose = () => animateClose();
 
   return (
-    <div className="overflow-modal-overlay" onClick={handleClose}>
+    <div className={styles.overflowModalOverlay} onClick={handleClose}>
       <div
-        className={`overflow-modal-container ${
-          closing ? "modal-close" : "modal-open"
+        className={`${styles.overflowModalContainer} ${
+          closing ? styles.modalClose : styles.modalOpen
         }`}
         onClick={(e) => e.stopPropagation()}
       >
-        <header className="overflow-modal-header">
+        <header className={styles.overflowModalHeader}>
           <h2>{formattedDate}</h2>
-          <button className="close-btn" onClick={handleClose}>
+          <button className={styles.closeBtn} onClick={handleClose}>
             X
           </button>
         </header>
 
-        <div className="modal-body">
+        <div className={styles.modalBody}>
           {events.map((event) => (
             <div
               key={event.id}
-              className="overflow-event"
+              className={styles.overflowEvent}
               style={{ backgroundColor: event.color }}
               onClick={() => {
-                onEventClick(event) // OPEN EDIT MODAL
-                handleClose() // Close overflow modal
+                onEventClick(event); // OPEN EDIT MODAL
+                handleClose(); // Close overflow modal
               }}
             >
               {event.allDay ? "(All Day) " : ""}
@@ -56,5 +55,5 @@ export default function OverflowModal({
         </div>
       </div>
     </div>
-  )
+  );
 }

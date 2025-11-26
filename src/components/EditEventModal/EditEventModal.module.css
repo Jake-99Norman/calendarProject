@@ -1,57 +1,53 @@
-/* Full-screen overlay to center the modal */
-.modal-overlay {
-  position: fixed; /* stay on top of the page */
+.modalOverlay {
+  position: fixed;
   top: 0;
   left: 0;
   width: 100vw;
   height: 100vh;
-  display: flex; 
+  display: flex;
   justify-content: center;
   align-items: center;
   z-index: 10;
-  background-color: hsla(0, 0%, 0%, 0.4); 
+  background-color: hsla(0, 0%, 0%, 0.4);
 }
 
-/* Modal container */
-.modal-container {
-  background-color: hsl(0, 0%, 100%); 
+.modalContainer {
+  background-color: #fff;
   border-radius: 0.3em;
   width: 350px;
   max-width: 90%;
-  border: 3px solid #333; 
+  border: 3px solid #333;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
   animation: popIn 0.3s ease-out forwards;
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
-  padding: .5rem;
+  padding: 0.5rem;
 }
 
-/* Header */
-.modal-header {
+.modalHeader {
   display: flex;
   justify-content: space-between;
   align-items: center;
   gap: 1.3rem;
   width: 100%;
   padding: 0.5rem 1rem;
-  color: #555; 
+  color: #555;
   font-weight: bold;
 }
 
-.modal-close-btn {
+.modalCloseBtn {
   cursor: pointer;
   height: 3rem;
   width: 3rem;
   background-color: transparent;
   border: none;
   font-size: x-large;
-  color: #333; 
+  color: #333;
 }
 
-/* Body */
-.modal-body {
+.modalBody {
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -60,8 +56,7 @@
   width: 100%;
 }
 
-/* Event input */
-.modal-event-input {
+.modalEventInput {
   display: flex;
   flex-direction: column;
   justify-content: flex-start;
@@ -69,31 +64,29 @@
   padding: 1rem;
 }
 
-.modal-event-input label {
+.modalEventInput label {
   font-weight: bold;
   margin-bottom: 0.3rem;
-  color: #777; 
+  color: #777;
 }
 
-.day-selector {
+.daySelector {
   width: 100%;
   padding-bottom: 1rem;
 }
 
-/* Time selectors */
-.modal-time {
+.modalTime {
   display: flex;
   gap: 1em;
   width: 100%;
 }
 
-.modal-time input {
+.modalTime input {
   width: 95%;
   margin: 0.1rem;
 }
 
-/* Color selector */
-.modal-color-selector-container {
+.modalColorSelectorContainer {
   display: flex;
   flex-direction: column;
   align-items: flex-start;
@@ -102,17 +95,17 @@
   gap: 0.5rem;
 }
 
-.color-options {
+.colorOptions {
   display: flex;
   gap: 5px;
   margin-top: 6px;
 }
 
-.color-options input[type="radio"] {
+.colorOptions input[type="radio"] {
   display: none;
 }
 
-.color-box {
+.colorBox {
   width: 24px;
   height: 24px;
   border-radius: 4px;
@@ -120,51 +113,46 @@
   cursor: pointer;
 }
 
-.color-box:hover{
+.colorBox:hover {
   transform: scale(1.1);
 }
 
-
 .red {
-  background-color: hsl(0, 75%, 60%); /* Red Event */
+  background-color: hsl(0, 75%, 60%);
 }
 
-.red:hover{
+.red:hover {
   box-shadow: 0 0 5px hsl(0, 75%, 40%);
 }
 
 .blue {
-  background-color: hsl(200, 80%, 50%); /* Blue Event */
+  background-color: hsl(200, 80%, 50%);
 }
 
-.blue:hover{
-    box-shadow: 0 0 5px hsl(200, 80%, 30%);
-
+.blue:hover {
+  box-shadow: 0 0 5px hsl(200, 80%, 30%);
 }
 
 .green {
-  background-color: hsl(150, 80%, 30%); /* Green Event */
+  background-color: hsl(150, 80%, 30%);
 }
 
-.green:hover{
+.green:hover {
   box-shadow: 0 0 5px hsl(150, 80%, 10%);
-;
 }
 
-
-/* Footer / Buttons */
-.modal-footer {
+.modalFooter {
   display: flex;
   align-items: center;
   width: 100%;
-  padding-bottom: .5rem;
+  padding-bottom: 0.5rem;
   gap: 5px;
 }
 
-.modal-add-btn {
-  background-color: hsl(150, 80%, 95%); /* Save/Add Button Background */
-  color: hsl(150, 80%, 10%); /* Save/Add Button Text */
-  border: 2px solid hsl(150, 80%, 30%); /* Save/Add Button Border */
+.modalAddBtn {
+  background-color: hsl(150, 80%, 95%);
+  color: hsl(150, 80%, 10%);
+  border: 2px solid hsl(150, 80%, 30%);
   border-radius: 0.3rem;
   width: 90%;
   height: 3em;
@@ -173,13 +161,13 @@
   transition: background-color 0.2s ease;
 }
 
-.modal-add-btn:hover {
-  background-color: hsl(150, 80%, 90%); 
+.modalAddBtn:hover {
+  background-color: hsl(150, 80%, 90%);
 }
 
-.modal-delete-btn {
-  background-color: hsl(0, 75%, 95%); 
-  color: hsl(0, 75%, 10%); 
+.modalDeleteBtn {
+  background-color: hsl(0, 75%, 95%);
+  color: hsl(0, 75%, 10%);
   border: 2px solid hsl(0, 75%, 60%);
   border-radius: 6px;
   cursor: pointer;
@@ -190,11 +178,27 @@
   transition: background-color 0.2s ease;
 }
 
-.modal-delete-btn:hover {
-  background-color: hsl(0, 75%, 90%); 
+.modalDeleteBtn:hover {
+  background-color: hsl(0, 75%, 90%);
 }
 
-/* Animation */
+.modalDeleteBtn {
+  background-color: hsl(0, 75%, 95%);
+  color: hsl(0, 75%, 10%);
+  border: 2px solid hsl(0, 75%, 60%);
+  border-radius: 6px;
+  cursor: pointer;
+  width: 90%;
+  height: 3em;
+  padding: 8px 14px;
+  margin: 0.5rem auto;
+  transition: background-color 0.2s ease;
+}
+
+.modalDeleteBtn:hover {
+  background-color: hsl(0, 75%, 90%);
+}
+
 @keyframes popIn {
   0% {
     transform: scale(0.7);

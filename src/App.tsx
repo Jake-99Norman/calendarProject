@@ -1,9 +1,9 @@
 import { useState } from "react"
 import CalendarHeader from "./components/CalendarHeader/CalendarHeader"
 import CalendarGrid from "./components/CalendarGrid/CalendarGrid"
-import EditEventModal from "./components/EditEventModal"
+import EditEventModal from "./components/EditEventModal/EditEventModal"
 import OverflowModal from "./components/OverflowModal/OverflowModal"
-import Modal from "./components/Modal"
+import Modal from "./components/Modal/Modal"
 import { useLocalStorage } from "./hooks/useLocalStorage"
 import type { Event } from "./types/types"
 

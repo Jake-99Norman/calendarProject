@@ -1,19 +1,20 @@
-import type { Event } from "../../types/types"
-import EventItem from "../EventItem/EventItem"
+import type { Event } from "../../types/types";
+import EventItem from "../EventItem/EventItem";
+import styles from "./DayCell.module.css"; // CSS Modules import
 
 type DayCellProps = {
-  day: number
-  month: number
-  year: number
-  isCurrentMonth: boolean
-  isToday: boolean
-  isPast: boolean
-  events: Event[]
-  maxEvents: number
-  onDayClick: (date: string) => void
-  onEventClick: (event: Event) => void
-  onOverflowClick: (date: string, events: Event[]) => void
-}
+  day: number;
+  month: number;
+  year: number;
+  isCurrentMonth: boolean;
+  isToday: boolean;
+  isPast: boolean;
+  events: Event[];
+  maxEvents: number;
+  onDayClick: (date: string) => void;
+  onEventClick: (event: Event) => void;
+  onOverflowClick: (date: string, events: Event[]) => void;
+};
 
 export default function DayCell({
   day,
@@ -30,55 +31,56 @@ export default function DayCell({
 }: DayCellProps) {
   const dateKey = `${year}-${String(month + 1).padStart(2, "0")}-${String(
     day
-  ).padStart(2, "0")}`
+  ).padStart(2, "0")}`;
 
-  const visibleEvents = events.slice(0, maxEvents)
-  const overflowCount = events.length - maxEvents
+  const visibleEvents = events.slice(0, maxEvents);
+  const overflowCount = events.length - maxEvents;
 
   // Handlers
-
   const handleDayClick = (e: React.MouseEvent<HTMLDivElement, MouseEvent>) => {
-    e.stopPropagation()
-    onDayClick(dateKey)
-  }
+    e.stopPropagation();
+    onDayClick(dateKey);
+  };
 
   const handleOverflowClick = (
     e: React.MouseEvent<HTMLButtonElement, MouseEvent>
   ) => {
-    e.stopPropagation()
-    onOverflowClick(dateKey, events)
-  }
+    e.stopPropagation();
+    onOverflowClick(dateKey, events);
+  };
 
-  // Render
+  // Compose class names using CSS Modules
+  const dayCellClass = [
+    styles.dayCell,
+    !isCurrentMonth ? styles.notCurrent : "",
+    isToday ? styles.today : "",
+    isPast ? styles.past : "",
+  ]
+    .filter(Boolean)
+    .join(" ");
 
   return (
-    <div
-      className={`day-cell 
-        ${isCurrentMonth ? "" : "not-current"} 
-        ${isToday ? "today" : ""} 
-        ${isPast ? "past" : ""}`}
-      onClick={handleDayClick}
-    >
-      <div className="day-number">{day}</div>
+    <div className={dayCellClass} onClick={handleDayClick}>
+      <div className={styles.dayNumber}>{day}</div>
 
-      <div className="events-container">
+      <div className={styles.eventsContainer}>
         {visibleEvents.map((event) => (
           <EventItem
             key={event.id}
             event={event}
             onClick={(e: React.MouseEvent<HTMLDivElement, MouseEvent>) => {
-              e.stopPropagation() // Prevent triggering day click
-              onEventClick(event)
+              e.stopPropagation(); // Prevent triggering day click
+              onEventClick(event);
             }}
           />
         ))}
       </div>
 
       {overflowCount > 0 && (
-        <button className="overflow-btn" onClick={handleOverflowClick}>
+        <button className={styles.overflowBtn} onClick={handleOverflowClick}>
           +{overflowCount} more
         </button>
       )}
     </div>
-  )
+  );
 }
