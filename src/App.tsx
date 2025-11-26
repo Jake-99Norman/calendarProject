@@ -1,7 +1,6 @@
 import { useState } from "react"
 import CalendarHeader from "./components/CalendarHeader/CalendarHeader"
 import CalendarGrid from "./components/CalendarGrid/CalendarGrid"
-// import "./styles/calendar.css"
 import EditEventModal from "./components/EditEventModal"
 import OverflowModal from "./components/OverflowModal/OverflowModal"
 import Modal from "./components/Modal"
