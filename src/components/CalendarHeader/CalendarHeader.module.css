@@ -1,21 +1,22 @@
 .calendarHeader {
   display: flex;
   align-items: center;
-  padding: 0.5rem 1rem;
-  background-color: #f7f7f7;
-  border-bottom: 1px solid #ddd;
+  justify-content: flex-start;
+  
+  margin: 0;
+}
+
+.calendarHeader h2 {
+  margin: .3rem;
+  padding: 0;
 }
 
 .btn {
-  border: none;
+  border: 1px solid #ddd;
   background-color: transparent;
   font-size: larger;
   cursor: pointer;
-}
-
-
-.todayBtn{
-  font-weight: bold;
+  margin: 0 0.2rem;
 }
 
 .prevBtn,.nextBtn{

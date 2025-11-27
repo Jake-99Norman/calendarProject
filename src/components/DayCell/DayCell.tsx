@@ -11,6 +11,7 @@ type DayCellProps = {
   isPast: boolean;
   events: Event[];
   maxEvents: number;
+  weekdayLabel?: string; // optional
   onDayClick: (date: string) => void;
   onEventClick: (event: Event) => void;
   onOverflowClick: (date: string, events: Event[]) => void;
@@ -25,6 +26,7 @@ export default function DayCell({
   isPast,
   events,
   maxEvents,
+  weekdayLabel,
   onDayClick,
   onEventClick,
   onOverflowClick,
@@ -61,6 +63,9 @@ export default function DayCell({
 
   return (
     <div className={dayCellClass} onClick={handleDayClick}>
+      {/* Weekday label above day number if provided */}
+      {weekdayLabel && <div className={styles.weekday}>{weekdayLabel}</div>}
+
       <div className={styles.dayNumber}>{day}</div>
 
       <div className={styles.eventsContainer}>
@@ -69,7 +74,7 @@ export default function DayCell({
             key={event.id}
             event={event}
             onClick={(e: React.MouseEvent<HTMLDivElement, MouseEvent>) => {
-              e.stopPropagation(); // Prevent triggering day click
+              e.stopPropagation();
               onEventClick(event);
             }}
           />

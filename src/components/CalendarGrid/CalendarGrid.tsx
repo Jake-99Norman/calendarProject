@@ -29,57 +29,48 @@ export default function CalendarGrid({
 
   return (
     <div className={styles.calendarContainer}>
-      <div className={styles.calendar}>
-        {/* Weekday headings */}
-        <div className={styles.weekdayRow}>
-          {WEEKDAYS.map((d) => (
-            <div key={d} className={styles.weekday}>
-              {d}
-            </div>
-          ))}
-        </div>
+      <div className={styles.calendarGrid}>
+        {calendarCells.map((cell, index) => {
+          const { day, month: m, year: y, isCurrentMonth } = cell;
 
-        {/* Calendar Days */}
-        <div className={styles.calendarGrid}>
-          {calendarCells.map((cell) => {
-            const { day, month: m, year: y, isCurrentMonth } = cell;
+          const dateKey = `${y}-${String(m + 1).padStart(2, "0")}-${String(
+            day
+          ).padStart(2, "0")}`;
 
-            const dateKey = `${y}-${String(m + 1).padStart(2, "0")}-${String(
-              day
-            ).padStart(2, "0")}`;
+          const dayEvents = eventsByDate.get(dateKey) ?? [];
 
-            const dayEvents = eventsByDate.get(dateKey) ?? [];
+          const cellDate = new Date(y, m, day);
 
-            const cellDate = new Date(y, m, day);
+          const isToday =
+            today.getFullYear() === y &&
+            today.getMonth() === m &&
+            today.getDate() === day;
 
-            const isToday =
-              today.getFullYear() === y &&
-              today.getMonth() === m &&
-              today.getDate() === day;
+          const isPast =
+            isCurrentMonth &&
+            cellDate < new Date(today.getFullYear(), today.getMonth(), today.getDate());
 
-            const isPast =
-              isCurrentMonth &&
-              cellDate <
-                new Date(today.getFullYear(), today.getMonth(), today.getDate());
+          // Determine the weekday for the first week of the month
+          const weekdayLabel = index < 7 ? WEEKDAYS[cellDate.getDay()] : undefined;
 
-            return (
-              <DayCell
-                key={dateKey}
-                day={day}
-                month={m}
-                year={y}
-                isCurrentMonth={isCurrentMonth}
-                isToday={isToday}
-                isPast={isPast}
-                events={dayEvents}
-                maxEvents={maxEvents}
-                onDayClick={onDayClick}
-                onEventClick={onEventClick}
-                onOverflowClick={onOverflowClick}
-              />
-            );
-          })}
-        </div>
+          return (
+            <DayCell
+              key={dateKey}
+              day={day}
+              month={m}
+              year={y}
+              isCurrentMonth={isCurrentMonth}
+              isToday={isToday}
+              isPast={isPast}
+              events={dayEvents}
+              maxEvents={maxEvents}
+              weekdayLabel={weekdayLabel} // Pass the label only for first row
+              onDayClick={onDayClick}
+              onEventClick={onEventClick}
+              onOverflowClick={onOverflowClick}
+            />
+          );
+        })}
       </div>
     </div>
   );
