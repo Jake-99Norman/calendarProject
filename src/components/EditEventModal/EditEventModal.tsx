@@ -4,6 +4,7 @@ import modalStyles from "../Modal/Modal.module.css"; // shared modal styles
 import styles from "./EditEventModal.module.css";    // only delete button
 import { useModalAnimation } from "../../hooks/useModalAnimation";
 import "../../styles/modalAnimation.css";
+import {format} from "date-fns" 
 
 type EditModalProps = {
   event: Event;
@@ -28,11 +29,7 @@ export default function EditModal({
   const { closing, animateClose } = useModalAnimation(onClose);
   const handleClose = () => animateClose();
 
-  const formattedDate = new Date(event.date).toLocaleDateString(undefined, {
-    weekday: "short",
-    month: "short",
-    day: "numeric",
-  });
+  const formattedDate = format(new Date(event.date), "EEE, MMM d")
 
   const handleSave = () => {
     setError("");

@@ -1,5 +1,6 @@
 import type { Event } from "../../types/types";
 import styles from "./EventItem.module.css";
+import { parse, format } from "date-fns";
 
 type EventItemProps = {
   event: Event;
@@ -9,12 +10,10 @@ type EventItemProps = {
 export default function EventItem({ event, onClick }: EventItemProps) {
   function formatTime(time?: string) {
     if (!time) return "";
-    const [h, m] = time.split(":");
-    let hour = parseInt(h, 10);
-    const minute = parseInt(m, 10);
-    const ampm = hour >= 12 ? "PM" : "AM";
-    hour = hour % 12 || 12;
-    return `${hour}:${minute.toString().padStart(2, "0")} ${ampm}`;
+    
+    // Parses "HH:mm" into a Date object
+    const parsed = parse(time, "HH:mm", new Date());
+    return format(parsed, "h:mm a"); 
   }
 
   const eventColorClass =

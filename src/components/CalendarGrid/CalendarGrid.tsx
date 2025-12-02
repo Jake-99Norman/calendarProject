@@ -1,7 +1,8 @@
 import type { Event } from "../../types/types";
 import DayCell from "../DayCell/DayCell";
 import { useCalendar } from "../../hooks/useCalendar";
-import styles from "./CalendarGrid.module.css"; // CSS Modules import
+import styles from "./CalendarGrid.module.css";
+import { isSameDay, isBefore, startOfDay } from "date-fns";
 
 const WEEKDAYS = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
 
@@ -26,32 +27,22 @@ export default function CalendarGrid({
 }: CalendarGridProps) {
   const { calendarCells, eventsByDate } = useCalendar(month, year, events);
   const maxEvents = 5;
+  const todayStart = startOfDay(today);
 
   return (
     <div className={styles.calendarContainer}>
       <div className={styles.calendarGrid}>
         {calendarCells.map((cell, index) => {
-          const { day, month: m, year: y, isCurrentMonth } = cell;
-
-          const dateKey = `${y}-${String(m + 1).padStart(2, "0")}-${String(
-            day
-          ).padStart(2, "0")}`;
+          const { date, dateKey, day, month: m, year: y, isCurrentMonth } = cell;
 
           const dayEvents = eventsByDate.get(dateKey) ?? [];
 
-          const cellDate = new Date(y, m, day);
+          // date-fns checks
+          const isToday = isSameDay(date, today);
+          const isPast = isCurrentMonth && isBefore(date, todayStart);
 
-          const isToday =
-            today.getFullYear() === y &&
-            today.getMonth() === m &&
-            today.getDate() === day;
-
-          const isPast =
-            isCurrentMonth &&
-            cellDate < new Date(today.getFullYear(), today.getMonth(), today.getDate());
-
-          // Determine the weekday for the first week of the month
-          const weekdayLabel = index < 7 ? WEEKDAYS[cellDate.getDay()] : undefined;
+          // Labels only in the first row
+          const weekdayLabel = index < 7 ? WEEKDAYS[date.getDay()] : undefined;
 
           return (
             <DayCell
@@ -64,7 +55,7 @@ export default function CalendarGrid({
               isPast={isPast}
               events={dayEvents}
               maxEvents={maxEvents}
-              weekdayLabel={weekdayLabel} // Pass the label only for first row
+              weekdayLabel={weekdayLabel}
               onDayClick={onDayClick}
               onEventClick={onEventClick}
               onOverflowClick={onOverflowClick}

@@ -1,7 +1,7 @@
 import type { Event } from "../../types/types";
 import styles from "./OverflowModal.module.css";
 import { useModalAnimation } from "../../hooks/useModalAnimation";
-
+import {format} from "date-fns"
 type OverflowModalProps = {
   events: Event[];
   date: string;
@@ -16,7 +16,7 @@ export default function OverflowModal({
   onEventClick,
 }: OverflowModalProps) {
   const d = new Date(date);
-  const formattedDate = `${d.getMonth() + 1}/${d.getDate()}/${d.getFullYear()}`;
+  const formattedDate = format(new Date(date), "MM/dd/yyyy");
 
   const { closing, animateClose } = useModalAnimation(onClose);
 

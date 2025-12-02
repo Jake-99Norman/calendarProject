@@ -2,6 +2,7 @@ import { useState } from "react";
 import type { Event } from "../../types/types";
 import styles from "./Modal.module.css";
 import { useModalAnimation } from "../../hooks/useModalAnimation";
+import { format } from "date-fns";
 
 type ModalProps = {
   date: string;
@@ -20,9 +21,7 @@ export default function Modal({ date, onClose, addEvent }: ModalProps) {
   const { closing, animateClose } = useModalAnimation(onClose);
 
   const d = new Date(date);
-  const formattedDate = `${String(d.getMonth() + 1).padStart(2, "0")}/${String(
-    d.getDate()
-  ).padStart(2, "0")}/${d.getFullYear()}`;
+  const formattedDate = format(new Date(date), "MM/dd/yyyy")
 
   const handleClose = () => animateClose();
 

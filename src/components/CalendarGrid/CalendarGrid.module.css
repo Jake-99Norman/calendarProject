@@ -8,24 +8,18 @@ body {
 
 .calendarContainer {
   width: 100%;
-  height: 100vh;
+  height: 100%;
   max-width: 1500px;
   display: flex;
   justify-content: center;
   overflow-x: hidden;
-}
-
-.weekdayRow {
-  display: grid;
-  grid-template-columns: repeat(7, 1fr);
-  height: 2.5rem;
+  background-color: red;
 }
 
 .calendarGrid {
   display: grid;
   grid-template-columns: repeat(7, 1fr);
   grid-template-rows: auto;
-
 }
 
 .calendarGrid > div {
