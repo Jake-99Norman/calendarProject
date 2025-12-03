@@ -13,7 +13,7 @@ export default function EventItem({ event, onClick }: EventItemProps) {
     
     // Parses "HH:mm" into a Date object
     const parsed = parse(time, "HH:mm", new Date());
-    return format(parsed, "h:mm a"); 
+    return format(parsed, "h:mm a"); // → "3:05 PM"
   }
 
   const eventColorClass =

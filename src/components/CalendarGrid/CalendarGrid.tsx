@@ -2,7 +2,7 @@ import type { Event } from "../../types/types";
 import DayCell from "../DayCell/DayCell";
 import { useCalendar } from "../../hooks/useCalendar";
 import styles from "./CalendarGrid.module.css";
-import { isSameDay, isBefore, startOfDay } from "date-fns";
+import { isSameDay, isBefore, startOfDay, parseISO } from "date-fns";
 
 const WEEKDAYS = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
 
@@ -37,16 +37,14 @@ export default function CalendarGrid({
 
           const dayEvents = eventsByDate.get(dateKey) ?? [];
 
-          // date-fns checks
           const isToday = isSameDay(date, today);
           const isPast = isCurrentMonth && isBefore(date, todayStart);
 
-          // Labels only in the first row
           const weekdayLabel = index < 7 ? WEEKDAYS[date.getDay()] : undefined;
 
           return (
             <DayCell
-              key={dateKey}
+              key={`${dateKey}-${index}`}
               day={day}
               month={m}
               year={y}
@@ -56,7 +54,7 @@ export default function CalendarGrid({
               events={dayEvents}
               maxEvents={maxEvents}
               weekdayLabel={weekdayLabel}
-              onDayClick={onDayClick}
+              onDayClick={() => onDayClick(dateKey)} // already safe
               onEventClick={onEventClick}
               onOverflowClick={onOverflowClick}
             />

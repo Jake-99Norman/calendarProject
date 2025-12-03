@@ -1,14 +1,16 @@
-import { useState } from "react";
+import { useState, useCallback } from "react";
 
 export function useModalAnimation(onClose: () => void, duration = 250) {
-    const [closing, setClosing] = useState(false)
+  const [closing, setClosing] = useState<boolean>(false);
 
-    function animateClose(){
-        setClosing(true)
+  const animateClose = useCallback(() => {
+    setClosing(true); // start closing animation
 
-        setTimeout(() => {
-            onClose()
-        }, duration);
-    }
-    return {closing, animateClose}
+    setTimeout(() => {
+      onClose();
+      setClosing(false); // reset for next modal open
+    }, duration);
+  }, [onClose, duration]);
+
+  return { closing, animateClose };
 }

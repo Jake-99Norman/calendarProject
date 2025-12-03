@@ -1,6 +1,6 @@
 import type { Event } from "../../types/types";
 import EventItem from "../EventItem/EventItem";
-import styles from "./DayCell.module.css"; // CSS Modules import
+import styles from "./DayCell.module.css";
 
 type DayCellProps = {
   day: number;
@@ -11,7 +11,7 @@ type DayCellProps = {
   isPast: boolean;
   events: Event[];
   maxEvents: number;
-  weekdayLabel?: string; // optional
+  weekdayLabel?: string;
   onDayClick: (date: string) => void;
   onEventClick: (event: Event) => void;
   onOverflowClick: (date: string, events: Event[]) => void;
@@ -38,20 +38,16 @@ export default function DayCell({
   const visibleEvents = events.slice(0, maxEvents);
   const overflowCount = events.length - maxEvents;
 
-  // Handlers
-  const handleDayClick = (e: React.MouseEvent<HTMLDivElement, MouseEvent>) => {
+  const handleDayClick = (e: React.MouseEvent<HTMLDivElement>) => {
     e.stopPropagation();
     onDayClick(dateKey);
   };
 
-  const handleOverflowClick = (
-    e: React.MouseEvent<HTMLButtonElement, MouseEvent>
-  ) => {
+  const handleOverflowClick = (e: React.MouseEvent<HTMLButtonElement>) => {
     e.stopPropagation();
     onOverflowClick(dateKey, events);
   };
 
-  // Compose class names using CSS Modules
   const dayCellClass = [
     styles.dayCell,
     !isCurrentMonth ? styles.notCurrent : "",
@@ -63,9 +59,7 @@ export default function DayCell({
 
   return (
     <div className={dayCellClass} onClick={handleDayClick}>
-      {/* Weekday label above day number if provided */}
       {weekdayLabel && <div className={styles.weekday}>{weekdayLabel}</div>}
-
       <div className={styles.dayNumber}>{day}</div>
 
       <div className={styles.eventsContainer}>
@@ -73,7 +67,7 @@ export default function DayCell({
           <EventItem
             key={event.id}
             event={event}
-            onClick={(e: React.MouseEvent<HTMLDivElement, MouseEvent>) => {
+            onClick={(e) => {
               e.stopPropagation();
               onEventClick(event);
             }}
